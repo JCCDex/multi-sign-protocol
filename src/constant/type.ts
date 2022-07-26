@@ -19,5 +19,5 @@ export enum MEMO_TYPE {
 }
 
 export enum CHAIN_ID {
-  JINGTUM = "0x8000013b"
+  SWTC = "0x8000013b"
 }
