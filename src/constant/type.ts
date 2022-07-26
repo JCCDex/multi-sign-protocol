@@ -6,14 +6,12 @@ export enum TransactionType {
   UNREGISTER = "unregister"
 }
 
-export const TEMPLATE = "template";
-
 export const MULTI_SIGN = "multiSign";
 
-export enum TOPIC_TYPE {
+export enum MEMO_TYPE {
   NAME_SERVICE = "name-service",
   MULTI_SIGN = "multi-sign",
-  ORACLE = "oracle"
+  ORACLE = "oracle",
+  PAYLOAD = "payload",
+  TEMPLATE = "template"
 }
-
-export const PAYLOAD = "payload";
