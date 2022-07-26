@@ -18,4 +18,6 @@ export enum MEMO_TYPE {
   TEMPLATE = "template"
 }
 
-export const CHAIN_ID = "0x8000013b";
+export enum CHAIN_ID {
+  JINGTUM = "0x8000013b"
+}
