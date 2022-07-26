@@ -1,0 +1,44 @@
+{
+  "name": "@jccdex/multi-sign-protocol",
+  "version": "0.0.1",
+  "description": "multi sign protocol",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "pretty": "pretty-quick --staged",
+    "prepare": "husky install",
+    "compile": "tsc",
+    "deploy": "./publish.sh"
+  },
+  "author": "JCCDex",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "babel-jest": "^27.5.1",
+    "eslint": "^8.10.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.3",
+    "sinon": "^13.0.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@commonify/lowdb": "^3.0.0",
+    "@jccdex/jingtum-lib": "^0.0.4",
+    "@swtc/wallet": "^1.1.1",
+    "bignumber.js": "^9.0.2",
+    "jcc_exchange": "^3.2.0",
+    "lodash": "^4.17.21",
+    "tp-js-sdk": "^3.7.1"
+  },
+  "files": [
+    "lib"
+  ]
+}
