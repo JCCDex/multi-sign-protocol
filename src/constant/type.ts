@@ -6,10 +6,9 @@ export enum OperationType {
 
 export enum ActionType {
   REGISTER = "register",
-  UNREGISTER = "unregister"
+  UNREGISTER = "unregister",
+  MULTI_SIGN = "multiSign"
 }
-
-export const MULTI_SIGN = "multiSign";
 
 export enum MEMO_TYPE {
   NAME_SERVICE = "name-service",
@@ -18,3 +17,5 @@ export enum MEMO_TYPE {
   PAYLOAD = "payload",
   TEMPLATE = "template"
 }
+
+export const CHAIN_ID = "0x8000013b";
