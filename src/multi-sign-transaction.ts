@@ -1,5 +1,5 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IMultiSignOptions } from "./types";
+import { IMultiSignOptions, IPaymentTopic } from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
@@ -75,7 +75,7 @@ export default class MultiSignTransaction {
    * @returns {boolean}
    * @memberof MultiSignTransaction
    */
-  public isPaymentTopic(data): boolean {
+  public isPaymentTopic(data: IPaymentTopic): boolean {
     const { type, template, topic } = data || {};
     const { name, description, deadline, operation } = topic || {};
     const { chainId, from, to, seq, token } = operation || {};
@@ -92,5 +92,9 @@ export default class MultiSignTransaction {
       isPositiveInteger(seq) &&
       this.isAmount(token)
     );
+  }
+
+  public multiSign(tx, secret: string) {
+    return wallet.multiSign(tx, secret);
   }
 }
