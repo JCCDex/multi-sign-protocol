@@ -23,3 +23,8 @@ export interface IPaymentTopic {
     };
   };
 }
+
+export interface ISubmitMultiSigned {
+  node: string;
+  tx;
+}

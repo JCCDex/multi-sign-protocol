@@ -998,9 +998,9 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@jccdex/jingtum-lib@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@jccdex/jingtum-lib/-/jingtum-lib-0.1.0.tgz#5cb75f2ead614ec9381ead94c284bc4c1e3dfcba"
-  integrity sha512-d0CA2cUZ8wKHAgX41PhXs61xooDCasTcCupOt7SAWbcCnqwLNzsSZGSzuZCAbiVEEXgzmtAekNHyOpNq5dvC/g==
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@jccdex/jingtum-lib/-/jingtum-lib-0.1.1.tgz#fb3756b9ee0aa7baf03fce438096d42a53c60b70"
+  integrity sha512-EKZZl3IYDX/NSJdQY6IjctjFatlpFWhhj52AVazJQ+moHiXu82RxdieBNyjauPIloQUTtf1XAu25HGEgtQLpTA==
   dependencies:
     "@swtc/serializer" "^1.1.0"
     "@swtc/wallet" "^1.0.20"

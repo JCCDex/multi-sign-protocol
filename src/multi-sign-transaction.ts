@@ -1,11 +1,12 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IMultiSignOptions, IPaymentTopic } from "./types";
+import { IMultiSignOptions, IPaymentTopic, ISubmitMultiSigned } from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
 import { isValidCurrency } from "@swtc/common";
 import { IAmount } from "@swtc/wallet";
 import BigNumber from "bignumber.js";
+import { service } from "./fetch/service";
 
 export default class MultiSignTransaction {
   private currency: string;
@@ -96,5 +97,23 @@ export default class MultiSignTransaction {
 
   public multiSign(tx, secret: string) {
     return wallet.multiSign(tx, secret);
+  }
+
+  public async submitMultiSigned(data: ISubmitMultiSigned) {
+    const { node, tx } = data;
+
+    const res = await service({
+      url: node,
+      method: "post",
+      data: {
+        method: "submit_multisigned",
+        params: [
+          {
+            tx_json: tx
+          }
+        ]
+      }
+    });
+    return res;
   }
 }
