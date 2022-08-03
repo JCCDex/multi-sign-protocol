@@ -89,4 +89,17 @@ describe("test MultiSignTransaction", () => {
       expect(multiSignTransaction.isSignerSetTopic(data)).toEqual(true);
     });
   });
+
+  describe("test isPayload API", () => {
+    test("data is payload", async () => {
+      const data = {
+        type: "payload",
+        total: 3,
+        number: 1,
+        payload: "010100"
+      };
+
+      expect(multiSignTransaction.isPayload(data)).toEqual(true);
+    });
+  });
 });

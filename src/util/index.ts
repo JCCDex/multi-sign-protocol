@@ -1,7 +1,5 @@
 import { convertHexToString } from "@swtc/common";
-
 import { IMemo } from "@jccdex/jingtum-lib/lib/type";
-import BigNumber from "bignumber.js";
 
 export const isDef = (v): boolean => {
   return v !== undefined && v !== null;
@@ -12,8 +10,7 @@ export const isPositiveStr = (v): boolean => {
 };
 
 export const isPositiveInteger = (v): boolean => {
-  const bn = new BigNumber(v);
-  return bn.isInteger() && bn.isPositive();
+  return Number.isInteger(v) && v > 0;
 };
 
 export const isJSON = (v): boolean => {

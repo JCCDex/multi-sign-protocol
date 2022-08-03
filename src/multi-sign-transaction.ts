@@ -1,5 +1,5 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IEnableTopic, IMultiSignOptions, IPaymentTopic, ISignerSetTopic, ISubmitMultiSigned } from "./types";
+import { IEnableTopic, IMultiSignOptions, IPayload, IPaymentTopic, ISignerSetTopic, ISubmitMultiSigned } from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
@@ -145,6 +145,13 @@ export default class MultiSignTransaction {
       isPositiveInteger(threshold) &&
       Array.isArray(lists) &&
       lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight))
+    );
+  }
+
+  public isPayload(data: IPayload): boolean {
+    const { type, total, number, payload } = data;
+    return (
+      type === MEMO_TYPE.PAYLOAD && isPositiveInteger(total) && isPositiveInteger(number) && isPositiveStr(payload)
     );
   }
 

@@ -84,6 +84,13 @@ export interface ISignerSetTopic {
   };
 }
 
+export interface IPayload {
+  type: string;
+  total: number;
+  number: number;
+  payload: string;
+}
+
 export interface ISubmitMultiSigned {
   node: string;
   tx;
