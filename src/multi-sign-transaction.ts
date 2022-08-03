@@ -149,7 +149,7 @@ export default class MultiSignTransaction {
    * @memberof MultiSignTransaction
    */
   public serializeVote({ account, deadline, multiSign }) {
-    return {
+    const data = {
       type: MEMO_TYPE.ORACLE,
       action: ActionType.MULTI_SIGN,
       chainId: this.chainId,
@@ -157,6 +157,26 @@ export default class MultiSignTransaction {
       deadline,
       multiSign
     };
+    invariant(this.isVote(data), "The vote includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化payload
+   *
+   * @param {*} {total, number, payload}
+   * @returns {IPayload}
+   * @memberof MultiSignTransaction
+   */
+  public serializePayload({ total, number, payload }): IPayload {
+    const data = {
+      type: MEMO_TYPE.PAYLOAD,
+      total,
+      number,
+      payload
+    };
+    invariant(this.isPayload(data), "The payload includes invalid value");
+    return data;
   }
 
   /**
