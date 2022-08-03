@@ -9,6 +9,8 @@ import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import invariant from "./util/tiny-invariant";
+import { IMultiTransfer } from "./types/tp-transfer";
+import transfer from "./util/tp-helper";
 
 export default class MultiSignTransaction {
   private currency: string;
@@ -280,5 +282,23 @@ export default class MultiSignTransaction {
       }
     });
     return res;
+  }
+
+  /**
+   * 转账
+   *
+   * @param {IMultiTransfer} data
+   * @returns {Promise<string>}
+   * @memberof MultiSignTransaction
+   */
+  public async transfer(data: IMultiTransfer): Promise<string> {
+    const hash = await transfer(
+      Object.assign({}, data, {
+        currency: this.currency,
+        value: this.value,
+        issuer: this.issuer
+      })
+    );
+    return hash;
   }
 }

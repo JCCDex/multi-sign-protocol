@@ -9,3 +9,12 @@ export interface ITPTransfer {
   issuer: string;
   memo: string;
 }
+
+export interface IMultiTransfer {
+  node: string;
+  // 非tp环境secret
+  secret?: string;
+  from: string;
+  to: string;
+  memo: string;
+}
