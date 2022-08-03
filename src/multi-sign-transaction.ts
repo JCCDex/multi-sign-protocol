@@ -1,5 +1,5 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IEnableTopic, IMultiSignOptions, IPaymentTopic, ISubmitMultiSigned } from "./types";
+import { IEnableTopic, IMultiSignOptions, IPaymentTopic, ISignerSetTopic, ISubmitMultiSigned } from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
@@ -118,6 +118,33 @@ export default class MultiSignTransaction {
       wallet.isValidAddress(account) &&
       isPositiveInteger(seq) &&
       clear_flag === 4
+    );
+  }
+
+  /**
+   * 是否是多签成员管理topic
+   *
+   * @param {ISignerSetTopic} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isSignerSetTopic(data: ISignerSetTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, seq, threshold, lists } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      isPositiveInteger(seq) &&
+      isPositiveInteger(threshold) &&
+      Array.isArray(lists) &&
+      lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight))
     );
   }
 

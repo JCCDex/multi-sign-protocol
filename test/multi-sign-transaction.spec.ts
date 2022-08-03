@@ -60,4 +60,33 @@ describe("test MultiSignTransaction", () => {
       expect(multiSignTransaction.isEnableTopic(data)).toEqual(true);
     });
   });
+
+  describe("test isSignerSetTopic API", () => {
+    test("data is signer set topic", async () => {
+      const data = {
+        type: "multi-sign",
+        template: "多签成员管理",
+        chainId: "0x8000013b",
+        topic: {
+          name: "多签成员管理",
+          description: "多签成员管理",
+          deadline: 1658129891,
+          operation: {
+            chainId: "0x8000013b",
+            account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+            seq: 45,
+            threshold: 2,
+            lists: [
+              {
+                account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                weight: 1
+              }
+            ]
+          }
+        }
+      };
+
+      expect(multiSignTransaction.isSignerSetTopic(data)).toEqual(true);
+    });
+  });
 });

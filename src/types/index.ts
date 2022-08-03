@@ -55,6 +55,35 @@ export interface IEnableTopic {
   };
 }
 
+export interface IAccountWeight {
+  account: string;
+  weight: number;
+}
+
+/**
+ * 多签成员topic
+ *
+ * @export
+ * @interface ISignerSetTopic
+ */
+export interface ISignerSetTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      seq: number;
+      threshold: number;
+      lists: IAccountWeight[];
+    };
+  };
+}
+
 export interface ISubmitMultiSigned {
   node: string;
   tx;
