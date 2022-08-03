@@ -1,5 +1,5 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IMultiSignOptions, IPaymentTopic, ISubmitMultiSigned } from "./types";
+import { IEnableTopic, IMultiSignOptions, IPaymentTopic, ISubmitMultiSigned } from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
@@ -95,10 +95,51 @@ export default class MultiSignTransaction {
     );
   }
 
+  /**
+   * 是否是恢复密钥topic
+   *
+   * @param {IEnableTopic} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isEnableTopic(data: IEnableTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, seq, options } = operation || {};
+    const { clear_flag } = options || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      isPositiveInteger(seq) &&
+      clear_flag === 4
+    );
+  }
+
+  /**
+   * 多签名
+   *
+   * @param {*} tx
+   * @param {string} secret
+   * @returns 交易内容及签名内容
+   * @memberof MultiSignTransaction
+   */
   public multiSign(tx, secret: string) {
     return wallet.multiSign(tx, secret);
   }
 
+  /**
+   * 提交多签名交易
+   *
+   * @param {ISubmitMultiSigned} data
+   * @returns
+   * @memberof MultiSignTransaction
+   */
   public async submitMultiSigned(data: ISubmitMultiSigned) {
     const { node, tx } = data;
 

@@ -35,4 +35,29 @@ describe("test MultiSignTransaction", () => {
       expect(multiSignTransaction.isPaymentTopic(data)).toEqual(true);
     });
   });
+
+  describe("test isEnableTopic API", () => {
+    test("data is enable topic", async () => {
+      const data = {
+        type: "multi-sign",
+        template: "恢复密钥",
+        chainId: "0x8000013b",
+        topic: {
+          name: "恢复密钥",
+          description: "恢复jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp钱包密钥",
+          deadline: 1658129891,
+          operation: {
+            chainId: "0x8000013b",
+            account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+            seq: 45,
+            options: {
+              clear_flag: 4
+            }
+          }
+        }
+      };
+
+      expect(multiSignTransaction.isEnableTopic(data)).toEqual(true);
+    });
+  });
 });
