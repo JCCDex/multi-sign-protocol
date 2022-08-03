@@ -95,3 +95,21 @@ export interface ISubmitMultiSigned {
   node: string;
   tx;
 }
+
+export interface ISigner {
+  Signer: {
+    Account: string;
+    SigningPubKey: string;
+    TxnSignature: string;
+  };
+}
+
+export interface IBaseMultisignTx {
+  Flags: number;
+  Fee: number | string;
+  TransactionType: string;
+  Sequence: number;
+  SigningPubKey: string;
+  Account: string;
+  Signers: ISigner[];
+}

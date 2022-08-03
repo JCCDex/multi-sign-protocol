@@ -1,5 +1,13 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
-import { IEnableTopic, IMultiSignOptions, IPayload, IPaymentTopic, ISignerSetTopic, ISubmitMultiSigned } from "./types";
+import {
+  IBaseMultisignTx,
+  IEnableTopic,
+  IMultiSignOptions,
+  IPayload,
+  IPaymentTopic,
+  ISignerSetTopic,
+  ISubmitMultiSigned
+} from "./types";
 import { IToken } from "./types/common";
 import { isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
@@ -125,6 +133,30 @@ export default class MultiSignTransaction {
     };
     invariant(this.isSignerSetTopic(data), "The topic includes invalid value");
     return data;
+  }
+
+  /**
+   * 序列化投票
+   *
+   * @param {*} {
+   *     account, 多签成员地址
+   *
+   *     deadline,
+   *
+   *     multiSign, multiSign接口返回结果
+   *   }
+   * @returns
+   * @memberof MultiSignTransaction
+   */
+  public serializeVote({ account, deadline, multiSign }) {
+    return {
+      type: MEMO_TYPE.ORACLE,
+      action: ActionType.MULTI_SIGN,
+      chainId: this.chainId,
+      account,
+      deadline,
+      multiSign
+    };
   }
 
   /**
@@ -282,6 +314,47 @@ export default class MultiSignTransaction {
       }
     });
     return res;
+  }
+
+  private isBaseMultisign(data: IBaseMultisignTx): boolean {
+    const { Flags, Fee, TransactionType, Account, Sequence, SigningPubKey, Signers } = data || {};
+
+    return (
+      Number.isInteger(Flags) &&
+      new BigNumber(Fee).isPositive() &&
+      isPositiveStr(TransactionType) &&
+      wallet.isValidAddress(Account) &&
+      Number.isInteger(Sequence) &&
+      Sequence >= 0 &&
+      SigningPubKey === "" &&
+      Array.isArray(Signers) &&
+      Signers.length === 1 &&
+      Signers.every(
+        (s) =>
+          wallet.isValidAddress(s?.Signer?.Account) &&
+          isPositiveStr(s?.Signer?.SigningPubKey) &&
+          isPositiveStr(s?.Signer?.TxnSignature)
+      )
+    );
+  }
+
+  /**
+   * 是否是投票信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isVote(data): boolean {
+    const { type, action, chainId, account, deadline, multiSign } = data || {};
+    return (
+      type === MEMO_TYPE.ORACLE &&
+      chainId === this.chainId &&
+      action === ActionType.MULTI_SIGN &&
+      wallet.isValidAddress(account) &&
+      isPositiveInteger(deadline) &&
+      this.isBaseMultisign(multiSign)
+    );
   }
 
   /**

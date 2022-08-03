@@ -143,4 +143,61 @@ describe("test MultiSignTransaction", () => {
       expect(multiSignTransaction.isPayload(data)).toEqual(true);
     });
   });
+
+  describe("test isVote API", () => {
+    test("data is vote", async () => {
+      const account = "jG4MZDywwxisf3G3az48cT3EamRxtbmbPB";
+      const multisignMember = {
+        address: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+        secret: "ssSbnZCoYbBGyMqeafUQ2esKi6nJS"
+      };
+
+      const tx = {
+        Account: account,
+        Amount: "0.1",
+        Destination: "jMCjtHzgrMvjt2EugYsqpxKtx6Z86gKo8X",
+        Fee: 0.00001,
+        Flags: 0,
+        TransactionType: "Payment",
+        Sequence: 1
+      };
+
+      const multisigned = multiSignTransaction.multiSign(tx, multisignMember.secret);
+
+      const vote = multiSignTransaction.serializeVote({
+        account: multisignMember.address,
+        deadline: 10000,
+        multiSign: multisigned
+      });
+
+      expect(vote).toEqual({
+        type: "oracle",
+        action: "multiSign",
+        chainId: "0x8000013b",
+        account: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+        deadline: 10000,
+        multiSign: {
+          Account: "jG4MZDywwxisf3G3az48cT3EamRxtbmbPB",
+          Amount: "100000",
+          Destination: "jMCjtHzgrMvjt2EugYsqpxKtx6Z86gKo8X",
+          Fee: "80000",
+          Flags: 0,
+          TransactionType: "Payment",
+          Sequence: 1,
+          SigningPubKey: "",
+          Signers: [
+            {
+              Signer: {
+                Account: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+                SigningPubKey: "02A4344F0DBB3C4046EB8D8A86202CCDEC87D2BA8CD537323B08CC985AED875438",
+                TxnSignature:
+                  "3045022100B34A6E1DA30BD7DCF43D8687870D3A7FAE4FF0F49466235AB4F38EF7116AE426022033F3D82267B72144AA5ABC17C9A3F945EF451333663AE35E3AE1902AF18AA353"
+              }
+            }
+          ]
+        }
+      });
+      expect(multiSignTransaction.isVote(vote)).toEqual(true);
+    });
+  });
 });
