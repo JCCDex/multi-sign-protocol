@@ -8,7 +8,7 @@ describe("test MultiSignTransaction", () => {
     value: "1"
   });
 
-  describe("test isPaymentTopic API", () => {
+  describe("test isPaymentTopic & serializePaymentTopic API", () => {
     test("data is payment topic", async () => {
       const data = {
         type: "multi-sign",
@@ -31,12 +31,27 @@ describe("test MultiSignTransaction", () => {
           }
         }
       };
+      const d = multiSignTransaction.serializePaymentTopic({
+        name: "奖励Bob 200USDT",
+        description: "鉴于Bob发现并报告了软件中的BUG，特此奖励",
+        deadline: 1658129891,
+        from: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        to: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        seq: 45,
+        token: {
+          currency: "JUSDT",
+          value: "200",
+          issuer: "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or"
+        }
+      });
 
-      expect(multiSignTransaction.isPaymentTopic(data)).toEqual(true);
+      expect(d).toEqual(data);
+
+      expect(multiSignTransaction.isPaymentTopic(d)).toEqual(true);
     });
   });
 
-  describe("test isEnableTopic API", () => {
+  describe("test isEnableTopic & serializeEnableTopic API", () => {
     test("data is enable topic", async () => {
       const data = {
         type: "multi-sign",
@@ -57,11 +72,21 @@ describe("test MultiSignTransaction", () => {
         }
       };
 
-      expect(multiSignTransaction.isEnableTopic(data)).toEqual(true);
+      const d = multiSignTransaction.serializeEnableTopic({
+        name: "恢复密钥",
+        description: "恢复jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp钱包密钥",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        seq: 45
+      });
+
+      expect(d).toEqual(data);
+
+      expect(multiSignTransaction.isEnableTopic(d)).toEqual(true);
     });
   });
 
-  describe("test isSignerSetTopic API", () => {
+  describe("test isSignerSetTopic & serializeSignerSetTopic API", () => {
     test("data is signer set topic", async () => {
       const data = {
         type: "multi-sign",
@@ -86,7 +111,23 @@ describe("test MultiSignTransaction", () => {
         }
       };
 
-      expect(multiSignTransaction.isSignerSetTopic(data)).toEqual(true);
+      const d = multiSignTransaction.serializeSignerSetTopic({
+        name: "多签成员管理",
+        description: "多签成员管理",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        seq: 45,
+        threshold: 2,
+        lists: [
+          {
+            account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+            weight: 1
+          }
+        ]
+      });
+      expect(d).toEqual(data);
+
+      expect(multiSignTransaction.isSignerSetTopic(d)).toEqual(true);
     });
   });
 

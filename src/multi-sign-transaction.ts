@@ -7,6 +7,8 @@ import { isValidCurrency } from "@swtc/common";
 import { IAmount } from "@swtc/wallet";
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
+import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
+import invariant from "./util/tiny-invariant";
 
 export default class MultiSignTransaction {
   private currency: string;
@@ -33,6 +35,94 @@ export default class MultiSignTransaction {
 
   public isAmount(amount: IAmount): boolean {
     return new BigNumber(amount.value).isPositive() && (this.isNativeToken(amount) || this.isNonNativeToken(amount));
+  }
+
+  /**
+   * 序列化转账topic
+   *
+   * @param {*} { name, description, deadline, from, to, seq, token }
+   * @returns {IPaymentTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializePaymentTopic({ name, description, deadline, from, to, seq, token }): IPaymentTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: PAYMENT_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          from,
+          to,
+          seq,
+          token
+        }
+      }
+    };
+    invariant(this.isPaymentTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /** 序列化恢复密钥topic
+   *
+   *
+   * @param {*} { name, description, deadline, seq, account }
+   * @returns {IEnableTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeEnableTopic({ name, description, deadline, seq, account }): IEnableTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: ENABLE_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          seq,
+          options: {
+            clear_flag: 4
+          }
+        }
+      }
+    };
+    invariant(this.isEnableTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化多签成员管理topic
+   *
+   * @param {*} { name, description, deadline, seq, account, threshold, lists }
+   * @returns {ISignerSetTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeSignerSetTopic({ name, description, deadline, seq, account, threshold, lists }): ISignerSetTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: SIGNER_SET_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          seq,
+          threshold,
+          lists
+        }
+      }
+    };
+    invariant(this.isSignerSetTopic(data), "The topic includes invalid value");
+    return data;
   }
 
   /**
