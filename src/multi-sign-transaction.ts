@@ -1,5 +1,6 @@
 import { ActionType, CHAIN_ID, MEMO_TYPE } from "./constant/type";
 import {
+  IAccountObjects,
   IBaseMultisignTx,
   IEnableTopic,
   IMultiSignOptions,
@@ -9,7 +10,7 @@ import {
   ISubmitMultiSigned
 } from "./types";
 import { IToken } from "./types/common";
-import { isPositiveInteger, isPositiveStr } from "./util";
+import { isDef, isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
 import { isValidCurrency } from "@swtc/common";
 import { IAmount } from "@swtc/wallet";
@@ -31,6 +32,32 @@ export default class MultiSignTransaction {
     this.currency = currency;
     this.issuer = issuer;
     this.value = value;
+  }
+
+  public static async fetchSignerList({ node, account }): Promise<IAccountObjects> {
+    const res: any = await service({
+      url: node,
+      method: "post",
+      data: {
+        method: "account_objects",
+        params: [
+          {
+            account,
+            type: "SignerList"
+          }
+        ]
+      }
+    });
+    const signerInfo = res?.result?.account_objects?.[0];
+
+    if (!isDef(signerInfo)) {
+      return null;
+    }
+
+    return {
+      SignerEntries: signerInfo.SignerEntries,
+      SignerQuorum: signerInfo.SignerQuorum
+    };
   }
 
   public isNativeToken(token: IToken): boolean {

@@ -113,3 +113,15 @@ export interface IBaseMultisignTx {
   Account: string;
   Signers: ISigner[];
 }
+
+export interface ISignerEntry {
+  SignerEntry: {
+    Account: string;
+    SignerWeight: number;
+  };
+}
+
+export interface IAccountObjects {
+  SignerEntries: ISignerEntry[];
+  SignerQuorum: number;
+}
