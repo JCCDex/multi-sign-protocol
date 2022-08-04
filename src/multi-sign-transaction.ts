@@ -34,6 +34,14 @@ export default class MultiSignTransaction {
     this.value = value;
   }
 
+  /**
+   * 获取多签账号列表及权重
+   *
+   * @static
+   * @param {*} { node, account }
+   * @returns {Promise<IAccountObjects>}
+   * @memberof MultiSignTransaction
+   */
   public static async fetchSignerList({ node, account }): Promise<IAccountObjects> {
     const res: any = await service({
       url: node,
@@ -58,6 +66,25 @@ export default class MultiSignTransaction {
       SignerEntries: signerInfo.SignerEntries,
       SignerQuorum: signerInfo.SignerQuorum
     };
+  }
+
+  /**
+   * 获取最新区块
+   *
+   * @static
+   * @param {string} node
+   * @returns {Promise<number>}
+   * @memberof MultiSignTransaction
+   */
+  public static async fetchLatestBlock(node: string): Promise<number> {
+    const res: any = await await service({
+      url: node,
+      method: "post",
+      data: {
+        method: "ledger_closed"
+      }
+    });
+    return res?.result?.ledger_index;
   }
 
   public isNativeToken(token: IToken): boolean {
