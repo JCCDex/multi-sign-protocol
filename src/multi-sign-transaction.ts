@@ -13,7 +13,7 @@ import { IToken } from "./types/common";
 import { isDef, isPositiveInteger, isPositiveStr } from "./util";
 import wallet from "./util/wallet";
 import { isValidCurrency } from "@swtc/common";
-import { IAmount } from "@swtc/wallet";
+import { IAmount } from "./types/common";
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
@@ -22,16 +22,12 @@ import { IMultiTransfer } from "./types/tp-transfer";
 import transfer from "./util/tp-helper";
 
 export default class MultiSignTransaction {
-  private currency: string;
-  private issuer: string;
-  private value: string;
+  private token: IAmount;
   private chainId = CHAIN_ID.SWTC;
 
   constructor(options: IMultiSignOptions) {
-    const { currency, issuer, value } = options;
-    this.currency = currency;
-    this.issuer = issuer;
-    this.value = value;
+    const { token } = options;
+    this.token = token;
   }
 
   /**
@@ -95,6 +91,29 @@ export default class MultiSignTransaction {
 
   public isNonNativeToken(token: IToken): boolean {
     return isValidCurrency(token?.currency) && wallet.isValidAddress(token?.issuer);
+  }
+
+  public compareToken(token1: IToken, token2: IToken): boolean {
+    return (
+      (this.isNativeToken(token1) && this.isNativeToken(token2)) ||
+      (token1.currency.toUpperCase() === token2.currency.toUpperCase() && token1.issuer === token2.issuer)
+    );
+  }
+
+  public compareAmount(amount: IAmount): boolean {
+    return this.compareToken(amount, this.token) && new BigNumber(amount.value).eq(this.token.value);
+  }
+
+  public isSend(type: string): boolean {
+    return type === "Send";
+  }
+
+  public isReceive(type: string): boolean {
+    return type === "Receive";
+  }
+
+  public isSuccess(v: string): boolean {
+    return v === "tesSUCCESS";
   }
 
   public isAmount(amount: IAmount): boolean {
@@ -441,9 +460,9 @@ export default class MultiSignTransaction {
   public async transfer(data: IMultiTransfer): Promise<string> {
     const hash = await transfer(
       Object.assign({}, data, {
-        currency: this.currency,
-        value: this.value,
-        issuer: this.issuer
+        currency: this.token.currency,
+        value: this.token.value,
+        issuer: this.token.issuer
       })
     );
     return hash;

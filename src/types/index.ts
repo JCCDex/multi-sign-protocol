@@ -1,9 +1,7 @@
 import { IAmount } from "./common";
 
 export interface IMultiSignOptions {
-  currency: string;
-  value: string;
-  issuer: string;
+  token: IAmount;
 }
 
 /**

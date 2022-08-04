@@ -3,9 +3,11 @@ import MultiSignTransaction from "../src/multi-sign-transaction";
 
 describe("test MultiSignTransaction", () => {
   const multiSignTransaction = new MultiSignTransaction({
-    currency: "SWT",
-    issuer: "",
-    value: "1"
+    token: {
+      currency: "SWT",
+      issuer: "",
+      value: "1"
+    }
   });
 
   describe("test isPaymentTopic & serializePaymentTopic API", () => {
