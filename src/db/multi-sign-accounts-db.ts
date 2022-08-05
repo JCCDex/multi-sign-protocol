@@ -2,7 +2,7 @@ import { IMultisignAccounts } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
 
-export default class ManagementGridDB extends BaseDB {
+export default class MultiSignAccountsDB extends BaseDB {
   public db: LowWithLodash<IMultisignAccounts>;
 
   constructor(file: string) {
