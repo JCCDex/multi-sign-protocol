@@ -10,7 +10,7 @@ import {
   ISubmitMultiSigned
 } from "./types";
 import { IToken } from "./types/common";
-import { isDef, isPositiveInteger, isPositiveStr } from "./util";
+import { convertMemo, convertTime, isDef, isJSON, isPositiveInteger, isPositiveStr, string2json } from "./util";
 import wallet from "./util/wallet";
 import { isValidCurrency } from "@swtc/common";
 import { IAmount } from "./types/common";
@@ -62,6 +62,34 @@ export default class MultiSignTransaction {
       SignerEntries: signerInfo.SignerEntries,
       SignerQuorum: signerInfo.SignerQuorum
     };
+  }
+
+  /**
+   * 获取区块上所有交易
+   *
+   * @static
+   * @param {*} {node, block}
+   * @returns
+   * @memberof MultiSignTransaction
+   */
+  public static async fetchBlockTransactions({ node, block }) {
+    const res: any = await service({
+      method: "get",
+      url: node + "/block/trans/" + block,
+      params: {
+        b: block
+      }
+    });
+    if (res.code === "0" && Array.isArray(res?.data?.list)) {
+      const txs = res?.data?.list;
+      return txs.map((tx) => {
+        const { memos } = tx || {};
+        const memo = convertMemo(memos);
+        const action = isJSON(memo) ? string2json(memo) : memo;
+        return Object.assign({}, tx, { memo: action, time: convertTime(tx.time) });
+      });
+    }
+    return [];
   }
 
   /**
