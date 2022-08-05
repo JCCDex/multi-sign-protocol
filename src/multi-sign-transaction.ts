@@ -263,6 +263,42 @@ export default class MultiSignTransaction {
   }
 
   /**
+   * 序列化注册
+   *
+   * @param {*} account
+   * @returns
+   * @memberof MultiSignTransaction
+   */
+  public serializeRegister(account) {
+    const data = {
+      type: MEMO_TYPE.NAME_SERVICE,
+      action: ActionType.REGISTER,
+      account,
+      caregory: ActionType.MULTI_SIGN
+    };
+    invariant(this.isRegisterAction(data), "The register action includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化注销
+   *
+   * @param {*} account
+   * @returns
+   * @memberof MultiSignTransaction
+   */
+  public serializeUnregister(account) {
+    const data = {
+      type: MEMO_TYPE.NAME_SERVICE,
+      action: ActionType.UNREGISTER,
+      account,
+      caregory: ActionType.MULTI_SIGN
+    };
+    invariant(this.isUnregisterAction(data), "The unregister action includes invalid value");
+    return data;
+  }
+
+  /**
    * 序列化payload
    *
    * @param {*} {total, number, payload}
