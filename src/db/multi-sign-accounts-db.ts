@@ -1,4 +1,4 @@
-import { IMultisignAccounts } from "../types/db";
+import { IMultiSignAccount, IMultisignAccounts } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
 
@@ -33,13 +33,14 @@ export default class MultiSignAccountsDB extends BaseDB {
     await this.db.write();
   }
 
-  insertAccount(account: string) {
+  insertAccount(data: IMultiSignAccount) {
     const actions = this.db.chain.get("accounts");
     const accounts = actions.value();
-    const has = actions.some((a) => a === account).value();
-    if (!has) {
-      accounts.push(account);
+    const index = actions.findIndex((a) => a.account === data.account).value();
+    if (index >= 0) {
+      accounts.splice(index, 1);
     }
+    accounts.push(data);
   }
 
   accounts(): string[] {
@@ -50,10 +51,10 @@ export default class MultiSignAccountsDB extends BaseDB {
     return this.db.chain.get("block").value();
   }
 
-  removeAccount(account: string) {
+  removeAccount(data: IMultiSignAccount) {
     const actions = this.db.chain.get("accounts");
     const accounts = actions.value();
-    const index = actions.findIndex((a) => a === account).value();
+    const index = actions.findIndex((a) => a.account === data.account).value();
     if (index >= 0) {
       accounts.splice(index, 1);
     }
