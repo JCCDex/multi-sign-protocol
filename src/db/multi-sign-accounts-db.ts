@@ -43,7 +43,7 @@ export default class MultiSignAccountsDB extends BaseDB {
     accounts.push(data);
   }
 
-  accounts(): string[] {
+  accounts(): IMultiSignAccount[] {
     return this.db.chain.get("accounts").value();
   }
 
