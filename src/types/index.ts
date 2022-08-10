@@ -1,4 +1,5 @@
 import { IAmount } from "./common";
+import { ISignerEntry } from "./db";
 
 export interface IMultiSignOptions {
   token: IAmount;
@@ -112,14 +113,7 @@ export interface IBaseMultisignTx {
   Signers: ISigner[];
 }
 
-export interface ISignerEntry {
-  SignerEntry: {
-    Account: string;
-    SignerWeight: number;
-  };
-}
-
 export interface IAccountObjects {
-  SignerEntries: ISignerEntry[];
-  SignerQuorum: number;
+  signers: ISignerEntry[];
+  quorum: number;
 }

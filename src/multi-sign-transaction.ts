@@ -59,8 +59,13 @@ export default class MultiSignTransaction {
     }
 
     return {
-      SignerEntries: signerInfo.SignerEntries,
-      SignerQuorum: signerInfo.SignerQuorum
+      signers: signerInfo.SignerEntries.map((s) => {
+        return {
+          account: s.SignerEntry.Account,
+          weight: s.SignerEntry.SignerWeight
+        };
+      }),
+      quorum: signerInfo.SignerQuorum
     };
   }
 
