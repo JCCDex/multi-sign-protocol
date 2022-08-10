@@ -47,6 +47,22 @@ export default class MultiSignAccountsDB extends BaseDB {
     return this.db.chain.get("accounts").value();
   }
 
+  /**
+   * 获取账号多签成员
+   *
+   * @param {string} account
+   * @returns {string[]}
+   * @memberof MultiSignAccountsDB
+   */
+  signers(account: string): string[] {
+    return this.db.chain
+      .get("accounts")
+      .find({ account })
+      .get("signers")
+      .map((entry) => entry.account)
+      .value();
+  }
+
   block(): number {
     return this.db.chain.get("block").value();
   }

@@ -1,7 +1,12 @@
-import { IAccountObjects } from ".";
-
-export interface IMultiSignAccount extends IAccountObjects {
+export interface ISignerEntry {
   account: string;
+  weight: number;
+}
+
+export interface IMultiSignAccount {
+  account: string;
+  quorum: number;
+  signers: ISignerEntry[];
 }
 
 export interface IMultisignAccounts {
