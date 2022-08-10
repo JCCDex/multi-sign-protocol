@@ -447,7 +447,7 @@ export default class MultiSignTransaction {
     const { type, template, topic } = data || {};
     const { name, description, deadline, operation } = topic || {};
     const { chainId, account, seq, threshold, lists } = operation || {};
-    return (
+    const isValid =
       type === MEMO_TYPE.MULTI_SIGN &&
       isPositiveStr(template) &&
       data.chainId === this.chainId &&
@@ -459,8 +459,16 @@ export default class MultiSignTransaction {
       isPositiveInteger(seq) &&
       isPositiveInteger(threshold) &&
       Array.isArray(lists) &&
-      lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight))
-    );
+      lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight));
+    if (!isValid) {
+      return isValid;
+    }
+
+    // 成员总票数
+    const totalQuorum = lists.map((l) => l.weight).reduce((a, b) => a + b, 0);
+
+    // 票数最大为8
+    return totalQuorum <= 8 && totalQuorum >= threshold;
   }
 
   public isPayload(data: IPayload): boolean {
