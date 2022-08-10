@@ -105,6 +105,10 @@ describe("test MultiSignTransaction", () => {
             threshold: 2,
             lists: [
               {
+                account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                weight: 1
+              },
+              {
                 account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
                 weight: 1
               }
@@ -121,6 +125,10 @@ describe("test MultiSignTransaction", () => {
         seq: 45,
         threshold: 2,
         lists: [
+          {
+            account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+            weight: 1
+          },
           {
             account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
             weight: 1

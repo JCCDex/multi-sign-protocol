@@ -467,8 +467,18 @@ export default class MultiSignTransaction {
     // 成员总票数
     const totalQuorum = lists.map((l) => l.weight).reduce((a, b) => a + b, 0);
 
-    // 票数最大为8
-    return totalQuorum <= 8 && totalQuorum >= threshold;
+    const signers = Array.from(new Set(lists.map((l) => l.account)));
+
+    // 成员总票数不小于通过权重
+    // 每个成员票数小于通过权重
+    // 成员数不大于8
+    // 不能有重复成员
+    return (
+      totalQuorum >= threshold &&
+      lists.every((l) => l.weight < threshold) &&
+      lists.length <= 8 &&
+      signers.length === lists.length
+    );
   }
 
   public isPayload(data: IPayload): boolean {
