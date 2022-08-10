@@ -13,7 +13,6 @@ export default class MultiSignAccountsDB extends BaseDB {
   private initData() {
     this.db.data = Object.assign(
       {
-        block: null,
         accounts: []
       },
       this.db.data
@@ -23,10 +22,6 @@ export default class MultiSignAccountsDB extends BaseDB {
   public async read() {
     await this.db.read();
     this.initData();
-  }
-
-  async updateBlock(value: number) {
-    this.db.data.block = value;
   }
 
   async write() {
@@ -61,10 +56,6 @@ export default class MultiSignAccountsDB extends BaseDB {
       .get("signers")
       .map((entry) => entry.account)
       .value();
-  }
-
-  block(): number {
-    return this.db.chain.get("block").value();
   }
 
   removeAccount(data: IMultiSignAccount) {

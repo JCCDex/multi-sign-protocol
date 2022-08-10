@@ -10,6 +10,9 @@ export interface IMultiSignAccount {
 }
 
 export interface IMultisignAccounts {
-  block: number;
   accounts: IMultiSignAccount[];
+}
+
+export interface IBlock {
+  block: number;
 }
