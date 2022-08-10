@@ -93,6 +93,35 @@ export default class MultiSignTransaction {
   }
 
   /**
+   * 获取账号信息
+   *
+   * @static
+   * @param {*} { node, account }
+   * @returns
+   * @memberof MultiSignTransaction
+   */
+  public static async fetchAccountInfo({ node, account }) {
+    const res: any = await service({
+      data: {
+        method: "account_info",
+        params: [
+          {
+            account
+          }
+        ]
+      },
+      method: "post",
+      url: node
+    });
+    const status = res?.result?.status;
+    if (status !== "success") {
+      throw new Error(res.result.error_message);
+    }
+
+    return res.result.account_data;
+  }
+
+  /**
    * 获取最新区块
    *
    * @static
@@ -101,7 +130,7 @@ export default class MultiSignTransaction {
    * @memberof MultiSignTransaction
    */
   public static async fetchLatestBlock(node: string): Promise<number> {
-    const res: any = await await service({
+    const res: any = await service({
       url: node,
       method: "post",
       data: {
