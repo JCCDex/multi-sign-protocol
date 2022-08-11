@@ -339,11 +339,12 @@ export default class MultiSignTransaction {
    * @returns {IPayload}
    * @memberof MultiSignTransaction
    */
-  public serializePayload({ total, number, payload }): IPayload {
+  public serializePayload({ total, number, payload, id }): IPayload {
     const data = {
       type: MEMO_TYPE.PAYLOAD,
       total,
       number,
+      id,
       payload
     };
     invariant(this.isPayload(data), "The payload includes invalid value");

@@ -85,6 +85,7 @@ export interface ISignerSetTopic {
 
 export interface IPayload {
   type: string;
+  id: string;
   total: number;
   number: number;
   payload: string;

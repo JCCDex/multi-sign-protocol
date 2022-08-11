@@ -3,7 +3,7 @@ import { ITopics, TopicStatus } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
 
-export default class MultiSignAccountsDB extends BaseDB {
+export default class MultiTopicDB extends BaseDB {
   public db: LowWithLodash<ITopics>;
 
   constructor(file: string) {

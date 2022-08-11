@@ -1,4 +1,4 @@
-import { IBaseMultisignTx, IEnableTopic, IPaymentTopic, ISignerSetTopic } from ".";
+import { IBaseMultisignTx, IEnableTopic, IPayload, IPaymentTopic, ISignerSetTopic } from ".";
 
 export interface ISignerEntry {
   account: string;
@@ -38,4 +38,8 @@ export interface ITopics {
   topics: ITopic[];
 
   signs: IBaseMultisignTx[];
+}
+
+export interface IPayloads {
+  payloads: IPayload[];
 }

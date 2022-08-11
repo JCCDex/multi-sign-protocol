@@ -14,10 +14,12 @@ export const isPositiveInteger = (v): boolean => {
 };
 
 export const isJSON = (v): boolean => {
+  if (typeof v !== "string") return false;
   try {
-    JSON.parse(v);
-    return true;
-  } catch (error) {
+    const result = JSON.parse(v);
+    const type = Object.prototype.toString.call(result);
+    return type === "[object Object]" || type === "[object Array]";
+  } catch (err) {
     return false;
   }
 };
