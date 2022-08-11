@@ -145,6 +145,7 @@ describe("test MultiSignTransaction", () => {
     test("data is payload", async () => {
       const data = {
         type: "payload",
+        id: "",
         total: 3,
         number: 1,
         payload: "010100"
