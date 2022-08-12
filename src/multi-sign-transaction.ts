@@ -568,7 +568,8 @@ export default class MultiSignTransaction {
       action === ActionType.MULTI_SIGN &&
       wallet.isValidAddress(account) &&
       isPositiveInteger(deadline) &&
-      this.isBaseMultisign(multiSign)
+      this.isBaseMultisign(multiSign) &&
+      account === multiSign.Signers[0].Signer.Account
     );
   }
 
