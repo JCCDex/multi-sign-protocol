@@ -1,5 +1,5 @@
 import { IBaseMultisignTx } from "../types";
-import { ITopics, TopicStatus } from "../types/db";
+import { ISign, ITopic, ITopics, TopicStatus } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
 
@@ -34,11 +34,16 @@ export default class MultiTopicDB extends BaseDB {
    * 插入topic
    *
    * @param {*} data
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
-  insertTopic(data) {
+  insertTopic(data: ITopic) {
     const topics = this.db.chain.get("topics").value();
-    topics.push(data);
+
+    const topic = topics.find((t) => t.md5 === data?.md5);
+
+    if (!topic) {
+      topics.push(data);
+    }
   }
 
   /**
@@ -47,9 +52,13 @@ export default class MultiTopicDB extends BaseDB {
    * @param {*} data
    * @memberof MultiSignAccountsDB
    */
-  insertSign(data) {
+  insertSign(data: ISign) {
     const signs = this.db.chain.get("signs").value();
-    signs.push(data);
+
+    const sign = signs.find((t) => t.md5 === data?.md5);
+    if (!sign) {
+      signs.push(data);
+    }
   }
 
   /**
@@ -58,7 +67,7 @@ export default class MultiTopicDB extends BaseDB {
    * @returns
    * @memberof MultiSignAccountsDB
    */
-  unexecutedTopics() {
+  unexecutedTopics(): ITopic[] {
     return this.db.chain
       .get("topics")
       .filter({
@@ -78,10 +87,12 @@ export default class MultiTopicDB extends BaseDB {
   updateTopic(seq: number, status: TopicStatus, hash: string) {
     const topic = this.db.chain
       .get("topics")
-      .find((t) => t.data.seq === seq)
+      .find((t) => t.data.topic.operation.seq === seq)
       .value();
-    topic.executeStatus = status;
-    topic.hash = hash;
+    if (topic) {
+      topic.executeStatus = status;
+      topic.hash = hash;
+    }
   }
 
   /**
@@ -90,7 +101,7 @@ export default class MultiTopicDB extends BaseDB {
    * @returns
    * @memberof MultiSignAccountsDB
    */
-  successfulTopics() {
+  successfulTopics(): ITopic[] {
     return this.db.chain
       .get("topics")
       .filter({
@@ -105,7 +116,7 @@ export default class MultiTopicDB extends BaseDB {
    * @returns
    * @memberof MultiSignAccountsDB
    */
-  failedTopics() {
+  failedTopics(): ITopic[] {
     return this.db.chain
       .get("topics")
       .filter({
@@ -124,9 +135,8 @@ export default class MultiTopicDB extends BaseDB {
   filterSignsBySeq(seq: number): IBaseMultisignTx[] {
     return this.db.chain
       .get("signs")
-      .filter({
-        Sequence: seq
-      })
+      .filter((s) => s.data.Sequence === seq)
+      .map((s) => s.data)
       .value();
   }
 }
