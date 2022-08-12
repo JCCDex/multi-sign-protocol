@@ -31,6 +31,10 @@ export default class MultiSignTransaction {
     this.token = token;
   }
 
+  public static secondsSinceEpoch(): number {
+    return Math.floor(Date.now() / 1000);
+  }
+
   /**
    * 获取多签账号列表及权重
    *
