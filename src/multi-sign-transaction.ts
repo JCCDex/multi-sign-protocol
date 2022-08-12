@@ -7,7 +7,8 @@ import {
   IPayload,
   IPaymentTopic,
   ISignerSetTopic,
-  ISubmitMultiSigned
+  ISubmitMultiSigned,
+  IVote
 } from "./types";
 import { IToken } from "./types/common";
 import { convertMemo, convertTime, isDef, isJSON, isPositiveInteger, isPositiveStr, string2json } from "./util";
@@ -555,7 +556,7 @@ export default class MultiSignTransaction {
    * @returns {boolean}
    * @memberof MultiSignTransaction
    */
-  public isVote(data): boolean {
+  public isVote(data: IVote): boolean {
     const { type, action, chainId, account, deadline, multiSign } = data || {};
     return (
       type === MEMO_TYPE.ORACLE &&

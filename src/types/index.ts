@@ -83,6 +83,15 @@ export interface ISignerSetTopic {
   };
 }
 
+export interface IVote {
+  type: string;
+  action: string;
+  chainId: string;
+  account: string;
+  deadline: number;
+  multiSign: IBaseMultisignTx;
+}
+
 export interface IPayload {
   type: string;
   id: string;

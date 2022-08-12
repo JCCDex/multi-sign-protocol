@@ -1,4 +1,4 @@
-import { IBaseMultisignTx } from "../types";
+import { IVote } from "../types";
 import { ISign, ITopic, ITopics, TopicStatus } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
@@ -50,7 +50,7 @@ export default class MultiTopicDB extends BaseDB {
    * 插入签名
    *
    * @param {*} data
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
   insertSign(data: ISign) {
     const signs = this.db.chain.get("signs").value();
@@ -65,7 +65,7 @@ export default class MultiTopicDB extends BaseDB {
    * 未执行topics
    *
    * @returns
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
   unexecutedTopics(): ITopic[] {
     return this.db.chain
@@ -82,7 +82,7 @@ export default class MultiTopicDB extends BaseDB {
    * @param {number} seq
    * @param {TopicStatus} status
    * @param {string} hash
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
   updateTopic(seq: number, status: TopicStatus, hash: string) {
     const topic = this.db.chain
@@ -99,7 +99,7 @@ export default class MultiTopicDB extends BaseDB {
    * 成功的topics
    *
    * @returns
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
   successfulTopics(): ITopic[] {
     return this.db.chain
@@ -114,7 +114,7 @@ export default class MultiTopicDB extends BaseDB {
    * 失败的topics
    *
    * @returns
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiTopicDB
    */
   failedTopics(): ITopic[] {
     return this.db.chain
@@ -129,13 +129,13 @@ export default class MultiTopicDB extends BaseDB {
    * 根据seq获取所有签名
    *
    * @param {number} seq
-   * @returns {IBaseMultisignTx[]}
-   * @memberof MultiSignAccountsDB
+   * @returns {IVote[]}
+   * @memberof MultiTopicDB
    */
-  filterSignsBySeq(seq: number): IBaseMultisignTx[] {
+  filterSignsBySeq(seq: number): IVote[] {
     return this.db.chain
       .get("signs")
-      .filter((s) => s.data.Sequence === seq)
+      .filter((s) => s.data.multiSign.Sequence === seq)
       .map((s) => s.data)
       .value();
   }

@@ -34,7 +34,7 @@ export default class MultiPayloadDB extends BaseDB {
    * 插入payload
    *
    * @param {*} data
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiPayloadDB
    */
   insertPayload(data: IPayloadDB) {
     const payloads = this.db.chain.get("payloads").value();
@@ -50,7 +50,7 @@ export default class MultiPayloadDB extends BaseDB {
    * 根据id移除payload
    *
    * @param {*} id
-   * @memberof MultiSignAccountsDB
+   * @memberof MultiPayloadDB
    */
   removePayloadsById(id) {
     return this.db.chain

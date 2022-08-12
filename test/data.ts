@@ -67,41 +67,48 @@ export const signerTopic = {
 };
 
 export const signerSign = {
-  Flags: 0,
-  Fee: 0.00001,
-  SignerEntries: [
-    {
-      SignerEntry: {
-        Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
-        SignerWeight: 1
+  type: "oracle",
+  action: "multiSign",
+  chainId: "0x8000013b",
+  account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+  deadline: 1658129891,
+  multiSign: {
+    Flags: 0,
+    Fee: 0.00001,
+    SignerEntries: [
+      {
+        SignerEntry: {
+          Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+          SignerWeight: 1
+        }
+      },
+      {
+        SignerEntry: {
+          Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+          SignerWeight: 1
+        }
+      },
+      {
+        SignerEntry: {
+          Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+          SignerWeight: 1
+        }
       }
-    },
-    {
-      SignerEntry: {
-        Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
-        SignerWeight: 1
+    ],
+    TransactionType: "SignerListSet",
+    Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+    SignerQuorum: 2,
+    Sequence: 46,
+    SigningPubKey: "",
+    Signers: [
+      {
+        Signer: {
+          Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+          SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+          TxnSignature:
+            "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+        }
       }
-    },
-    {
-      SignerEntry: {
-        Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
-        SignerWeight: 1
-      }
-    }
-  ],
-  TransactionType: "SignerListSet",
-  Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
-  SignerQuorum: 2,
-  Sequence: 46,
-  SigningPubKey: "",
-  Signers: [
-    {
-      Signer: {
-        Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
-        SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
-        TxnSignature:
-          "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
-      }
-    }
-  ]
+    ]
+  }
 };
