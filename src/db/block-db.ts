@@ -2,7 +2,7 @@ import { IBlock } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
 
-export default class MultiSignAccountsDB extends BaseDB {
+export default class BlockDB extends BaseDB {
   public db: LowWithLodash<IBlock>;
 
   constructor(file: string) {
