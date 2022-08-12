@@ -199,7 +199,7 @@ export default class MultiSignTransaction {
    * @returns {IPaymentTopic}
    * @memberof MultiSignTransaction
    */
-  public serializePaymentTopic({ name, description, deadline, from, to, seq, token }): IPaymentTopic {
+  public serializePaymentTopic({ name, description, deadline, from, to, seq, token, memo }): IPaymentTopic {
     const data = {
       type: MEMO_TYPE.MULTI_SIGN,
       template: PAYMENT_TEMPLATE.name,
@@ -210,6 +210,7 @@ export default class MultiSignTransaction {
         deadline,
         operation: {
           chainId: this.chainId,
+          memo: memo || "",
           from,
           to,
           seq,
@@ -405,7 +406,7 @@ export default class MultiSignTransaction {
   public isPaymentTopic(data: IPaymentTopic): boolean {
     const { type, template, topic } = data || {};
     const { name, description, deadline, operation } = topic || {};
-    const { chainId, from, to, seq, token } = operation || {};
+    const { chainId, from, to, seq, token, memo } = operation || {};
     return (
       type === MEMO_TYPE.MULTI_SIGN &&
       isPositiveStr(template) &&
@@ -417,7 +418,8 @@ export default class MultiSignTransaction {
       wallet.isValidAddress(from) &&
       wallet.isValidAddress(to) &&
       isPositiveInteger(seq) &&
-      this.isAmount(token)
+      this.isAmount(token) &&
+      isDef(memo)
     );
   }
 

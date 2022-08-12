@@ -21,6 +21,7 @@ export interface IPaymentTopic {
     deadline: number;
     operation: {
       chainId: string;
+      memo: string;
       from: string;
       to: string;
       seq: number;
