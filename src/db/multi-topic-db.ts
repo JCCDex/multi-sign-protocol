@@ -1,7 +1,8 @@
-import { IVote } from "../types";
-import { ISign, ITopic, ITopics, TopicStatus } from "../types/db";
+import { IBaseMultisignTx, IVote } from "../types";
+import { ISign, ISignerEntry, ITopic, ITopics, TopicStatus } from "../types/db";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
+const cloneDeep = require("lodash.clonedeep");
 
 export default class MultiTopicDB extends BaseDB {
   public db: LowWithLodash<ITopics>;
@@ -138,5 +139,53 @@ export default class MultiTopicDB extends BaseDB {
       .filter((s) => s.data.multiSign.Sequence === seq)
       .map((s) => s.data)
       .value();
+  }
+
+  /**
+   * 根据多签成员过滤签名
+   *
+   * @param {IVote[]} votes
+   * @param {ISignerEntry[]} signers
+   * @memberof MultiTopicDB
+   */
+  static filterSignsBySigner(votes: IVote[], signers: ISignerEntry[]) {
+    const accounts = signers.map((s) => s.account);
+    return votes.filter((v) => accounts.includes(v.account));
+  }
+
+  /**
+   * 判断是否超过topic quorum
+   *
+   * @static
+   * @param {IVote[]} votes
+   * @param {ISignerEntry[]} signers
+   * @param {number} quorum
+   * @returns {boolean}
+   * @memberof MultiTopicDB
+   */
+  static matchQuorum(votes: IVote[], signers: ISignerEntry[], quorum: number): boolean {
+    const voteAccounts = votes.map((t) => t.account);
+
+    const voteQuorum = signers
+      .filter((s) => voteAccounts.includes(s.account))
+      .map((v) => v.weight)
+      .reduce((a, b) => a + b, 0);
+
+    return voteQuorum >= quorum;
+  }
+
+  /**
+   * 拼接vote信息
+   *
+   * @static
+   * @param {IVote[]} votes
+   * @returns {IBaseMultisignTx}
+   * @memberof MultiTopicDB
+   */
+  static parseVote(votes: IVote[]): IBaseMultisignTx {
+    const signs = cloneDeep(votes.map((v) => v.multiSign));
+    const sign = signs[0];
+    sign.Signers = signs.map((s) => s.Signers[0]);
+    return sign;
   }
 }

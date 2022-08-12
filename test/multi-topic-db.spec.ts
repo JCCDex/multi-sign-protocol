@@ -57,11 +57,11 @@ describe("test MultiTopicDB", () => {
       await db.read();
       db.insertSign({
         md5: MultiTopicDB.md5(JSON.stringify(signerSign)),
-        data: signerSign
+        data: signerSign as any
       });
       db.insertSign({
         md5: MultiTopicDB.md5(JSON.stringify(signerSign)),
-        data: signerSign
+        data: signerSign as any
       });
 
       const signs = db.filterSignsBySeq(46);
@@ -69,7 +69,216 @@ describe("test MultiTopicDB", () => {
     });
   });
 
-  // describe("test static function", () => {
+  describe("test static function", () => {
+    test("test matchQuorum & parseVote", () => {
+      const votes = [
+        {
+          type: "oracle",
+          action: "multiSign",
+          chainId: "0x8000013b",
+          account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+          deadline: 1658129891,
+          multiSign: {
+            Flags: 0,
+            Fee: 0.00001,
+            SignerEntries: [
+              {
+                SignerEntry: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+                  SignerWeight: 1
+                }
+              }
+            ],
+            TransactionType: "SignerListSet",
+            Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+            SignerQuorum: 2,
+            Sequence: 46,
+            SigningPubKey: "",
+            Signers: [
+              {
+                Signer: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+                  TxnSignature:
+                    "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+                }
+              }
+            ]
+          }
+        },
+        {
+          type: "oracle",
+          action: "multiSign",
+          chainId: "0x8000013b",
+          account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+          deadline: 1658129891,
+          multiSign: {
+            Flags: 0,
+            Fee: 0.00001,
+            SignerEntries: [
+              {
+                SignerEntry: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+                  SignerWeight: 1
+                }
+              }
+            ],
+            TransactionType: "SignerListSet",
+            Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+            SignerQuorum: 2,
+            Sequence: 46,
+            SigningPubKey: "",
+            Signers: [
+              {
+                Signer: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+                  TxnSignature:
+                    "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+                }
+              }
+            ]
+          }
+        },
+        {
+          type: "oracle",
+          action: "multiSign",
+          chainId: "0x8000013b",
+          account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+          deadline: 1658129891,
+          multiSign: {
+            Flags: 0,
+            Fee: 0.00001,
+            SignerEntries: [
+              {
+                SignerEntry: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+                  SignerWeight: 1
+                }
+              },
+              {
+                SignerEntry: {
+                  Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+                  SignerWeight: 1
+                }
+              }
+            ],
+            TransactionType: "SignerListSet",
+            Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+            SignerQuorum: 2,
+            Sequence: 46,
+            SigningPubKey: "",
+            Signers: [
+              {
+                Signer: {
+                  Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+                  SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+                  TxnSignature:
+                    "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+                }
+              }
+            ]
+          }
+        }
+      ];
 
-  // });
+      const signers = [
+        {
+          account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+          weight: 1
+        },
+        {
+          account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+          weight: 1
+        },
+        {
+          account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+          weight: 1
+        }
+      ];
+
+      const matchVotes = MultiTopicDB.filterSignsBySigner(votes, signers);
+
+      expect(MultiTopicDB.matchQuorum(matchVotes, signers, 2)).toEqual(true);
+      expect(MultiTopicDB.matchQuorum(matchVotes, signers, 3)).toEqual(false);
+
+      expect(MultiTopicDB.parseVote(matchVotes)).toEqual({
+        Flags: 0,
+        Fee: 0.00001,
+        SignerEntries: [
+          {
+            SignerEntry: {
+              Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+              SignerWeight: 1
+            }
+          },
+          {
+            SignerEntry: {
+              Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+              SignerWeight: 1
+            }
+          },
+          {
+            SignerEntry: {
+              Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+              SignerWeight: 1
+            }
+          }
+        ],
+        TransactionType: "SignerListSet",
+        Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+        SignerQuorum: 2,
+        Sequence: 46,
+        SigningPubKey: "",
+        Signers: [
+          {
+            Signer: {
+              Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+              SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+              TxnSignature:
+                "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+            }
+          },
+          {
+            Signer: {
+              Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+              SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+              TxnSignature:
+                "3044022100C14362302EC5CCE39D7F9A2747195279AE6A628EE1429B5387BFC58948B455AF021F569082A5F8AC4C30F464CD22F423D29925CB667BED9BA4E9A82C1D79F9F3AF"
+            }
+          }
+        ]
+      });
+    });
+  });
 });
