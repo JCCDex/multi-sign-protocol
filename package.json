@@ -38,6 +38,7 @@
     "jcc_exchange": "^3.2.0",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
+    "spark-md5": "^3.0.2",
     "tp-js-sdk": "^3.7.1"
   },
   "files": [

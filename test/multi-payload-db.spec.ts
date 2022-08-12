@@ -13,6 +13,7 @@ describe("test ManagementGridDB", () => {
         total: 3,
         number: 3,
         id: "2b0d7b3dcb6d",
+        md5: "1",
         payload: '1"}'
       },
       {
@@ -20,6 +21,7 @@ describe("test ManagementGridDB", () => {
         total: 3,
         number: 2,
         id: "2b0d7b3dcb6d",
+        md5: "2",
         payload: ':"'
       },
       {
@@ -27,6 +29,7 @@ describe("test ManagementGridDB", () => {
         total: 3,
         number: 1,
         id: "2b0d7b3dcb6d",
+        md5: "3",
         payload: '{"a"'
       }
     ];
@@ -37,6 +40,7 @@ describe("test ManagementGridDB", () => {
         total: 2,
         number: 1,
         id: "2b0d7b3",
+        md5: "4",
         payload: "1"
       },
       {
@@ -44,6 +48,7 @@ describe("test ManagementGridDB", () => {
         total: 2,
         number: 2,
         id: "2b0d7b3",
+        md5: "5",
         payload: "2"
       }
     ];
@@ -54,6 +59,8 @@ describe("test ManagementGridDB", () => {
         for (const payload of payloads) {
           db.insertPayload(payload);
         }
+
+        db.insertPayload(payloads[0]);
 
         for (const payload of payloads1) {
           db.insertPayload(payload);

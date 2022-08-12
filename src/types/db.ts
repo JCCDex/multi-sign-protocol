@@ -31,15 +31,24 @@ export enum TopicStatus {
 export interface ITopic {
   executeStatus: TopicStatus;
   hash: string;
+  md5: string;
   data: IPaymentTopic | ISignerSetTopic | IEnableTopic;
+}
+
+export interface ISign {
+  md5: string;
+  data: IBaseMultisignTx;
 }
 
 export interface ITopics {
   topics: ITopic[];
+  signs: ISign[];
+}
 
-  signs: IBaseMultisignTx[];
+export interface IPayloadDB extends IPayload {
+  md5: string;
 }
 
 export interface IPayloads {
-  payloads: IPayload[];
+  payloads: IPayloadDB[];
 }

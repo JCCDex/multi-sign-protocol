@@ -1,5 +1,5 @@
 import { IPayload } from "../types";
-import { IPayloads } from "../types/db";
+import { IPayloadDB, IPayloads } from "../types/db";
 import { isJSON, string2json } from "../util";
 import BaseDB from "./base-db";
 import LowWithLodash from "./low";
@@ -36,9 +36,14 @@ export default class MultiPayloadDB extends BaseDB {
    * @param {*} data
    * @memberof MultiSignAccountsDB
    */
-  insertPayload(data) {
+  insertPayload(data: IPayloadDB) {
     const payloads = this.db.chain.get("payloads").value();
-    payloads.push(data);
+
+    const payload = payloads.find((p) => p.md5 === data?.md5);
+
+    if (!payload) {
+      payloads.push(data);
+    }
   }
 
   /**
