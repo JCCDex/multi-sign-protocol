@@ -21,6 +21,7 @@ import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./consta
 import invariant from "./util/tiny-invariant";
 import { IMultiTransfer } from "./types/tp-transfer";
 import transfer from "./util/tp-helper";
+const md5 = require("spark-md5");
 
 export default class MultiSignTransaction {
   private token: IAmount;
@@ -33,6 +34,10 @@ export default class MultiSignTransaction {
 
   public static secondsSinceEpoch(): number {
     return Math.floor(Date.now() / 1000);
+  }
+
+  public static md5(msg: string): string {
+    return md5.hash(msg);
   }
 
   /**
@@ -488,9 +493,13 @@ export default class MultiSignTransaction {
   }
 
   public isPayload(data: IPayload): boolean {
-    const { type, total, number, payload } = data;
+    const { type, total, number, payload, id } = data;
     return (
-      type === MEMO_TYPE.PAYLOAD && isPositiveInteger(total) && isPositiveInteger(number) && isPositiveStr(payload)
+      type === MEMO_TYPE.PAYLOAD &&
+      isPositiveInteger(total) &&
+      isPositiveInteger(number) &&
+      isPositiveStr(payload) &&
+      isPositiveStr(id)
     );
   }
 
