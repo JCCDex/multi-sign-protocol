@@ -19,6 +19,7 @@ describe("test MultiSignTransaction", () => {
         deadline: 1658129891,
         from: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
         to: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        memo: "",
         seq: 44,
         token: {
           currency: "JUSDT",
