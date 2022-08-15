@@ -73,6 +73,298 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(signerTopic);
 
       expect(multiSignTransaction.isSignerSetTopic(d)).toEqual(true);
+
+      const invalidTopics = [
+        {
+          type: "multi-sig",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 0,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013c",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvL",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: -1,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 0,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KT",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          type: "multi-sign",
+          template: "多签成员管理",
+          chainId: "0x8000013b",
+          topic: {
+            name: "多签成员管理",
+            description: "多签成员管理",
+            deadline: 1658129891,
+            operation: {
+              chainId: "0x8000013b",
+              account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+              seq: 46,
+              threshold: 2,
+              lists: [
+                {
+                  account: "jN2V3iXhzXZY3WjtEkgZwxyhgPwEyC3KTX",
+                  weight: 1
+                },
+                {
+                  account: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+                  weight: 0
+                }
+              ]
+            }
+          }
+        }
+      ];
+      for (const topic of invalidTopics) {
+        expect(multiSignTransaction.isSignerSetTopic(topic)).toEqual(false);
+      }
     });
   });
 
@@ -87,6 +379,41 @@ describe("test MultiSignTransaction", () => {
       };
 
       expect(multiSignTransaction.isPayload(data)).toEqual(true);
+
+      expect(
+        multiSignTransaction.serializePayload({
+          id: "1",
+          total: 3,
+          number: 1,
+          payload: "010100"
+        })
+      ).toEqual(data);
+    });
+  });
+
+  describe("test isRegisterAction ", () => {
+    test("data is register", () => {
+      const data = multiSignTransaction.serializeRegister("jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D");
+
+      expect(data).toEqual({
+        type: "name-service",
+        action: "register",
+        account: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+        category: "multiSign"
+      });
+    });
+  });
+
+  describe("test isUnregisterAction ", () => {
+    test("data is register", () => {
+      const data = multiSignTransaction.serializeUnregister("jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D");
+
+      expect(data).toEqual({
+        type: "name-service",
+        action: "unregister",
+        account: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+        category: "multiSign"
+      });
     });
   });
 

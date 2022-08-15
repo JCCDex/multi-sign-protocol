@@ -419,7 +419,8 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(from) &&
       wallet.isValidAddress(to) &&
-      isPositiveInteger(seq) &&
+      Number.isInteger(seq) &&
+      seq >= 0 &&
       this.isAmount(token) &&
       isDef(memo)
     );
@@ -446,7 +447,8 @@ export default class MultiSignTransaction {
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
-      isPositiveInteger(seq) &&
+      Number.isInteger(seq) &&
+      seq >= 0 &&
       clear_flag === 4
     );
   }
@@ -471,7 +473,8 @@ export default class MultiSignTransaction {
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
-      isPositiveInteger(seq) &&
+      Number.isInteger(seq) &&
+      seq >= 0 &&
       isPositiveInteger(threshold) &&
       Array.isArray(lists) &&
       lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight));
