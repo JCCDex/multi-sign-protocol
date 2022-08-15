@@ -142,6 +142,20 @@ export default class MultiTopicDB extends BaseDB {
   }
 
   /**
+   * 根据seq查找topic
+   *
+   * @param {number} seq
+   * @returns {ITopic}
+   * @memberof MultiTopicDB
+   */
+  findTopicBySeq(seq: number): ITopic {
+    return this.db.chain
+      .get("topics")
+      .find((t) => t.data.topic.operation.seq === seq)
+      .value();
+  }
+
+  /**
    * 根据seq移除signs
    *
    * @param {number} seq

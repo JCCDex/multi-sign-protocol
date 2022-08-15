@@ -53,6 +53,12 @@ describe("test MultiTopicDB", () => {
       ]);
     });
 
+    test("find topic", async () => {
+      await db.read();
+      const topic = db.findTopicBySeq(44);
+      expect(topic).toEqual(topics[0]);
+    });
+
     test("insert sign", async () => {
       await db.read();
       db.insertSign({
