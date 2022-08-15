@@ -142,6 +142,20 @@ export default class MultiTopicDB extends BaseDB {
   }
 
   /**
+   * 根据seq移除signs
+   *
+   * @param {number} seq
+   * @returns
+   * @memberof MultiTopicDB
+   */
+  removeSignsBySeq(seq: number) {
+    return this.db.chain
+      .get("signs")
+      .remove((sign) => sign.data.multiSign.Sequence === seq)
+      .value();
+  }
+
+  /**
    * 根据多签成员过滤签名
    *
    * @param {IVote[]} votes

@@ -2,7 +2,7 @@ import { test, describe, expect } from "@jest/globals";
 import { MultiTopicDB, TopicStatus } from "../src";
 import fs from "fs";
 import path from "path";
-import { enableTopic, paymentTopic, signerSign, signerTopic } from "./data";
+import { enableTopic, paymentTopic, signerSign, signerTopic, signs } from "./data";
 
 describe("test MultiTopicDB", () => {
   const file = path.join(__dirname, "./topic.json");
@@ -66,6 +66,20 @@ describe("test MultiTopicDB", () => {
 
       const signs = db.filterSignsBySeq(46);
       expect(signs).toEqual([signerSign]);
+    });
+
+    test("remove sign by seq", async () => {
+      await db.read();
+      for (const sign of signs) {
+        db.insertSign(sign as any);
+      }
+      await db.write();
+      await db.read();
+      expect(db.filterSignsBySeq(94).length).toBeGreaterThan(0);
+      db.removeSignsBySeq(94);
+      await db.write();
+      await db.read();
+      expect(db.filterSignsBySeq(94)).toEqual([]);
     });
   });
 

@@ -113,3 +113,158 @@ export const signerSign = {
     ]
   }
 };
+
+export const signs = [
+  {
+    md5: "060cc2dc17d5be826fe41fdd1e52a318",
+    data: {
+      type: "oracle",
+      action: "multiSign",
+      chainId: "0x8000013b",
+      account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+      deadline: 1661151011,
+      multiSign: {
+        Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+        Amount: "100",
+        Destination: "j4rmEZiaTdXBkgzXPdsu1JRBf5onngqfUi",
+        Fee: "80000",
+        Flags: 0,
+        Memos: [
+          {
+            Memo: {
+              MemoData: "",
+              MemoType: "737472696E67"
+            }
+          }
+        ],
+        TransactionType: "Payment",
+        Sequence: 94,
+        SigningPubKey: "",
+        Signers: [
+          {
+            Signer: {
+              Account: "jaLwe24yofQeejkNcBRJRsyk7Q9Y5mi2JA",
+              SigningPubKey: "02A39965225C2A6128A7978BC2376DEEF93A4D7B4305B2D095EC3CC2A2A8F07010",
+              TxnSignature:
+                "3045022100A4448FD252D15B050CC373132A101A8ABB0AB32E85FF71E99D5F7D2A6EFB3886022007EF44C7282F7267A6C3E74DD7FDB2AA5124B3F60CF14DE2D63D64E5787B6D49"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    md5: "bd2673002d7aef3f24b58d5699d25885",
+    data: {
+      type: "oracle",
+      action: "multiSign",
+      chainId: "0x8000013b",
+      account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+      deadline: 1661151011,
+      multiSign: {
+        Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+        Amount: "100",
+        Destination: "j4rmEZiaTdXBkgzXPdsu1JRBf5onngqfUi",
+        Fee: "80000",
+        Flags: 0,
+        Memos: [
+          {
+            Memo: {
+              MemoData: "",
+              MemoType: "737472696E67"
+            }
+          }
+        ],
+        TransactionType: "Payment",
+        Sequence: 94,
+        SigningPubKey: "",
+        Signers: [
+          {
+            Signer: {
+              Account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
+              SigningPubKey: "0279E5619910F550B646B1AE28ABC83CC93C184A705E21B4647E20E43BDAC98C50",
+              TxnSignature:
+                "304402203DE8218A7CCCFBD96244383BA326D59476CC47B8173795538257AECD239DE4EC02201F5CBA7F7C4D207B0E3072E5E9351897AF32E0DA2FE8B9E35D3967A202B3ACFC"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    md5: "ad31d10c29629313e7708a0764acfeba",
+    data: {
+      type: "oracle",
+      action: "multiSign",
+      chainId: "0x8000013b",
+      account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+      deadline: 1661151011,
+      multiSign: {
+        Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+        Amount: "100",
+        Destination: "j4rmEZiaTdXBkgzXPdsu1JRBf5onngqfUi",
+        Fee: "80000",
+        Flags: 0,
+        Memos: [
+          {
+            Memo: {
+              MemoData: "",
+              MemoType: "737472696E67"
+            }
+          }
+        ],
+        TransactionType: "Payment",
+        Sequence: 94,
+        SigningPubKey: "",
+        Signers: [
+          {
+            Signer: {
+              Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+              SigningPubKey: "03AA6BFD5692513492A58606761B500367D2AE80B3385CBAFB47F4606CE9FE64F8",
+              TxnSignature:
+                "3045022100B84759893A80EB3F7105639C3827275D56C379782BD354C578C01400920B241502204BE2B606CDB3F4B84163A2FD25D77FF9E4E7D36C9A8D93EEF3487A4AD26CED77"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    md5: "bbc670b35dbcbeac9ca0fb5e4d6dd3fb",
+    data: {
+      type: "oracle",
+      action: "multiSign",
+      chainId: "0x8000013b",
+      account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+      deadline: 1661151011,
+      multiSign: {
+        Account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+        Amount: "10000",
+        Destination: "j4rmEZiaTdXBkgzXPdsu1JRBf5onngqfUi",
+        Fee: "80000",
+        Flags: 0,
+        Memos: [
+          {
+            Memo: {
+              MemoData: "",
+              MemoType: "737472696E67"
+            }
+          }
+        ],
+        TransactionType: "Payment",
+        Sequence: 95,
+        SigningPubKey: "",
+        Signers: [
+          {
+            Signer: {
+              Account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+              SigningPubKey: "03AA6BFD5692513492A58606761B500367D2AE80B3385CBAFB47F4606CE9FE64F8",
+              TxnSignature:
+                "3045022100E9711F76022D2EB3313E8B85AB3CD93DC3EACE921033A1C40134B97AB9709ABD022009552EB1A563C1E427C92E9DA33D42F9B838E821F1804B0658BE67185D8E6535"
+            }
+          }
+        ]
+      }
+    }
+  }
+];
