@@ -18,3 +18,9 @@ export interface IMultiTransfer {
   to: string;
   memo: string;
 }
+
+export interface IMultiSign {
+  tx: any;
+
+  secret?: string;
+}

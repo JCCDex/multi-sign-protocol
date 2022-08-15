@@ -108,7 +108,10 @@ describe("test MultiSignTransaction", () => {
         Sequence: 1
       };
 
-      const multisigned = multiSignTransaction.multiSign(tx, multisignMember.secret);
+      const multisigned = await multiSignTransaction.multiSign({
+        tx,
+        secret: multisignMember.secret
+      });
 
       const vote = multiSignTransaction.serializeVote({
         account: multisignMember.address,

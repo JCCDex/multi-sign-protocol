@@ -19,8 +19,9 @@ import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import invariant from "./util/tiny-invariant";
-import { IMultiTransfer } from "./types/tp-transfer";
-import transfer from "./util/tp-helper";
+import { IMultiSign, IMultiTransfer } from "./types/tp-transfer";
+import transfer from "./util/transfer-helper";
+import multiSign from "./util/sign-helper";
 const md5 = require("spark-md5");
 
 export default class MultiSignTransaction {
@@ -506,15 +507,14 @@ export default class MultiSignTransaction {
   }
 
   /**
-   * 多签名
+   * 多签成员对交易签名
    *
-   * @param {*} tx
-   * @param {string} secret
-   * @returns 交易内容及签名内容
+   * @param {IMultiSign} data
+   * @returns
    * @memberof MultiSignTransaction
    */
-  public multiSign(tx, secret: string) {
-    return wallet.multiSign(tx, secret);
+  public async multiSign(data: IMultiSign) {
+    return await multiSign(data);
   }
 
   /**
