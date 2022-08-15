@@ -78,6 +78,65 @@ export default class MultiTopicDB extends BaseDB {
   }
 
   /**
+   * 根据指定地址签名的topics
+   *
+   * @param {string} address
+   *
+   * @returns {ITopic[]}
+   * @memberof MultiTopicDB
+   */
+  filterSignedTopics(address: string): ITopic[] {
+    return this.db.chain
+      .get("topics")
+      .filter({
+        executeStatus: TopicStatus.UNEXECUTED
+      })
+      .filter((t) => {
+        const signs = this.filterSignsBySeq(t.data.topic.operation.seq).map((s) => s.account);
+
+        return signs.includes(address);
+      })
+      .value();
+  }
+
+  /**
+   * 根据指定地址未签名的topics
+   *
+   * @param {string} address
+   *
+   * @returns {ITopic[]}
+   * @memberof MultiTopicDB
+   */
+  filterUnsignedTopics(address: string): ITopic[] {
+    return this.db.chain
+      .get("topics")
+      .filter({
+        executeStatus: TopicStatus.UNEXECUTED
+      })
+      .filter((t) => {
+        const signs = this.filterSignsBySeq(t.data.topic.operation.seq).map((s) => s.account);
+
+        return !signs.includes(address);
+      })
+      .value();
+  }
+
+  /**
+   * 过期topics
+   *
+   * @returns {ITopic[]}
+   * @memberof MultiTopicDB
+   */
+  expiredTopics(): ITopic[] {
+    return this.db.chain
+      .get("topics")
+      .filter({
+        executeStatus: TopicStatus.EXPIRED
+      })
+      .value();
+  }
+
+  /**
    * 更新topic status & hash
    *
    * @param {number} seq

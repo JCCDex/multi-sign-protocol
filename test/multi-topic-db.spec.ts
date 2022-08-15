@@ -40,6 +40,7 @@ describe("test MultiTopicDB", () => {
       }
       db.insertTopic(topics[0]);
       expect(db.unexecutedTopics()).toEqual(topics);
+
       await db.write();
     });
 
@@ -72,6 +73,18 @@ describe("test MultiTopicDB", () => {
 
       const signs = db.filterSignsBySeq(46);
       expect(signs).toEqual([signerSign]);
+      await db.write();
+    });
+
+    test("sign & unsigned topics", async () => {
+      await db.read();
+
+      const signedTopics = await db.filterSignedTopics("jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt");
+      expect(signedTopics).toEqual([topics[2]]);
+
+      const unexecutedTopics = await db.filterUnsignedTopics("jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt");
+
+      expect(unexecutedTopics).toEqual([topics[0], topics[1]]);
     });
 
     test("remove sign by seq", async () => {

@@ -25,7 +25,10 @@ export enum TopicStatus {
   // 成功
   SUCCESS = 1,
   // 失败
-  FAIL = 2
+  FAIL = 2,
+
+  // 过期
+  EXPIRED = 3
 }
 
 export interface ITopic {
