@@ -321,7 +321,7 @@ export default class MultiSignTransaction {
       type: MEMO_TYPE.NAME_SERVICE,
       action: ActionType.REGISTER,
       account,
-      caregory: ActionType.MULTI_SIGN
+      category: ActionType.MULTI_SIGN
     };
     invariant(this.isRegisterAction(data), "The register action includes invalid value");
     return data;
@@ -339,7 +339,7 @@ export default class MultiSignTransaction {
       type: MEMO_TYPE.NAME_SERVICE,
       action: ActionType.UNREGISTER,
       account,
-      caregory: ActionType.MULTI_SIGN
+      category: ActionType.MULTI_SIGN
     };
     invariant(this.isUnregisterAction(data), "The unregister action includes invalid value");
     return data;
