@@ -24,3 +24,14 @@ export interface IMultiSign {
 
   secret?: string;
 }
+
+export interface IAccountSet {
+  node: string;
+  // 非tp环境secret
+  secret?: string;
+  account: string;
+
+  // true 禁用密钥
+  // false 恢复密钥
+  disabled: boolean;
+}

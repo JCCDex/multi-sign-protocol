@@ -19,9 +19,10 @@ import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import invariant from "./util/tiny-invariant";
-import { IMultiSign, IMultiTransfer } from "./types/tp-transfer";
+import { IAccountSet, IMultiSign, IMultiTransfer } from "./types/tp-transfer";
 import transfer from "./util/transfer-helper";
 import multiSign from "./util/sign-helper";
+import setAccount from "./util/set-account-helper";
 const md5 = require("spark-md5");
 
 export default class MultiSignTransaction {
@@ -599,6 +600,23 @@ export default class MultiSignTransaction {
         issuer: this.token.issuer
       })
     );
+    return hash;
+  }
+
+  /**
+   * 账号操作
+   *
+   * data.disabled = true, 禁用密钥
+   *
+   * data.disabled = false, 恢复密钥
+   *
+   * @static
+   * @param {IAccountSet} data
+   * @returns {Promise<string>}
+   * @memberof MultiSignTransaction
+   */
+  public static async setAccount(data: IAccountSet): Promise<string> {
+    const hash = await setAccount(data);
     return hash;
   }
 }
