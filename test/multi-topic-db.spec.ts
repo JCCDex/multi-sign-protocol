@@ -46,9 +46,9 @@ describe("test MultiTopicDB", () => {
 
     test("update topic", async () => {
       await db.read();
-      db.updateTopic(45, TopicStatus.FAIL, "1");
+      db.updateTopic(topics[1].md5, TopicStatus.FAIL, "1");
       expect(db.failedTopics()).toEqual([Object.assign({}, topics[1], { executeStatus: TopicStatus.FAIL, hash: "1" })]);
-      db.updateTopic(46, TopicStatus.SUCCESS, "2");
+      db.updateTopic(topics[2].md5, TopicStatus.SUCCESS, "2");
       expect(db.successfulTopics()).toEqual([
         Object.assign({}, topics[2], { executeStatus: TopicStatus.SUCCESS, hash: "2" })
       ]);

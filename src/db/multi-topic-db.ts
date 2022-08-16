@@ -139,15 +139,15 @@ export default class MultiTopicDB extends BaseDB {
   /**
    * 更新topic status & hash
    *
-   * @param {number} seq
+   * @param {string} md5
    * @param {TopicStatus} status
    * @param {string} hash
    * @memberof MultiTopicDB
    */
-  updateTopic(seq: number, status: TopicStatus, hash: string) {
+  updateTopic(md5: string, status: TopicStatus, hash: string) {
     const topic = this.db.chain
       .get("topics")
-      .find((t) => t.data.topic.operation.seq === seq)
+      .find((t) => t.md5 === md5)
       .value();
     if (topic) {
       topic.executeStatus = status;
