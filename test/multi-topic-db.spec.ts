@@ -87,6 +87,16 @@ describe("test MultiTopicDB", () => {
       expect(unexecutedTopics).toEqual([topics[0], topics[1]]);
     });
 
+    test("expiredTopics", async () => {
+      await db.read();
+      db.updateTopic(topics[0].md5, TopicStatus.EXPIRED, "");
+      expect(db.expiredTopics()).toEqual([
+        Object.assign({}, topics[0], {
+          executeStatus: TopicStatus.EXPIRED
+        })
+      ]);
+    });
+
     test("remove sign by seq", async () => {
       await db.read();
       for (const sign of signs) {
