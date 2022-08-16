@@ -19,10 +19,11 @@ import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import invariant from "./util/tiny-invariant";
-import { IAccountSet, IMultiSign, IMultiTransfer } from "./types/tp-transfer";
+import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import transfer from "./util/transfer-helper";
 import multiSign from "./util/sign-helper";
 import setAccount from "./util/set-account-helper";
+import setSignerList from "./util/signer-list-helper";
 const md5 = require("spark-md5");
 
 export default class MultiSignTransaction {
@@ -620,6 +621,19 @@ export default class MultiSignTransaction {
    */
   public static async setAccount(data: IAccountSet): Promise<string> {
     const hash = await setAccount(data);
+    return hash;
+  }
+
+  /**
+   * 设置多签名成员
+   *
+   * @static
+   * @param {ISignerList} data
+   * @returns {Promise<string>}
+   * @memberof MultiSignTransaction
+   */
+  public static async setSignerList(data: ISignerList): Promise<string> {
+    const hash = await setSignerList(data);
     return hash;
   }
 }

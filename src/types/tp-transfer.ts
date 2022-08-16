@@ -1,3 +1,5 @@
+import { ISignerEntry } from "./db";
+
 export interface ITPTransfer {
   node: string;
   // 非tp环境secret
@@ -34,4 +36,14 @@ export interface IAccountSet {
   // true 禁用密钥
   // false 恢复密钥
   disabled: boolean;
+}
+
+export interface ISignerList {
+  node: string;
+  // 非tp环境secret
+  secret?: string;
+
+  account: string;
+  quorum: number;
+  signers: ISignerEntry[];
 }
