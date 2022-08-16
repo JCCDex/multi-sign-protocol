@@ -59,11 +59,9 @@ export default class MultiSignAccountsDB extends BaseDB {
   }
 
   removeAccount(data: IMultiSignAccount) {
-    const actions = this.db.chain.get("accounts");
-    const accounts = actions.value();
-    const index = actions.findIndex((a) => a.account === data.account).value();
-    if (index >= 0) {
-      accounts.splice(index, 1);
-    }
+    return this.db.chain
+      .get("accounts")
+      .remove((a) => a.account === data.account)
+      .value();
   }
 }
