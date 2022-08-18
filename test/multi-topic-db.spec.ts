@@ -56,7 +56,7 @@ describe("test MultiTopicDB", () => {
 
     test("find topic", async () => {
       await db.read();
-      const topic = db.findTopicBySeq(44);
+      const topic = db.findTopicByMd5(topics[0].md5);
       expect(topic).toEqual(topics[0]);
     });
 

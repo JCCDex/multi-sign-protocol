@@ -201,16 +201,16 @@ export default class MultiTopicDB extends BaseDB {
   }
 
   /**
-   * 根据seq查找topic
+   * 根据md5查找topic
    *
-   * @param {number} seq
+   * @param {string} md5
    * @returns {ITopic}
    * @memberof MultiTopicDB
    */
-  findTopicBySeq(seq: number): ITopic {
+  findTopicByMd5(md5: string): ITopic {
     return this.db.chain
       .get("topics")
-      .find((t) => t.data.topic.operation.seq === seq)
+      .find((t) => t.md5 === md5)
       .value();
   }
 
