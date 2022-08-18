@@ -1,13 +1,9 @@
 import { IBlock } from "../types/db";
 import BaseDB from "./base-db";
-import LowWithLodash from "./low";
 
-export default class BlockDB extends BaseDB {
-  public db: LowWithLodash<IBlock>;
-
+export default class BlockDB extends BaseDB<IBlock> {
   constructor(file: string) {
     super(file);
-    this.db = new LowWithLodash<IBlock>(this.adapter);
   }
 
   private initData() {

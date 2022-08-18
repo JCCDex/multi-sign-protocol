@@ -1,15 +1,11 @@
 import { IBaseMultisignTx, IVote } from "../types";
 import { ISign, ISignerEntry, ITopic, ITopics, TopicStatus } from "../types/db";
 import BaseDB from "./base-db";
-import LowWithLodash from "./low";
 const cloneDeep = require("lodash.clonedeep");
 
-export default class MultiTopicDB extends BaseDB {
-  public db: LowWithLodash<ITopics>;
-
+export default class MultiTopicDB extends BaseDB<ITopics> {
   constructor(file: string) {
     super(file);
-    this.db = new LowWithLodash<ITopics>(this.adapter);
   }
 
   private initData() {

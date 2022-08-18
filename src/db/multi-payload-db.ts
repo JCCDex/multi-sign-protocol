@@ -2,14 +2,10 @@ import { IPayload } from "../types";
 import { IPayloadDB, IPayloads } from "../types/db";
 import { isJSON, string2json } from "../util";
 import BaseDB from "./base-db";
-import LowWithLodash from "./low";
 
-export default class MultiPayloadDB extends BaseDB {
-  public db: LowWithLodash<IPayloads>;
-
+export default class MultiPayloadDB extends BaseDB<IPayloads> {
   constructor(file: string) {
     super(file);
-    this.db = new LowWithLodash<IPayloads>(this.adapter);
   }
 
   private initData() {

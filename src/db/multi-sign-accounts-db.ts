@@ -1,13 +1,9 @@
 import { IMultiSignAccount, IMultisignAccounts } from "../types/db";
 import BaseDB from "./base-db";
-import LowWithLodash from "./low";
 
-export default class MultiSignAccountsDB extends BaseDB {
-  public db: LowWithLodash<IMultisignAccounts>;
-
+export default class MultiSignAccountsDB extends BaseDB<IMultisignAccounts> {
   constructor(file: string) {
     super(file);
-    this.db = new LowWithLodash<IMultisignAccounts>(this.adapter);
   }
 
   private initData() {
