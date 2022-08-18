@@ -1,6 +1,6 @@
 {
   "name": "@jccdex/multi-sign-protocol",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "multi sign protocol",
   "main": "lib/index.js",
   "scripts": {
