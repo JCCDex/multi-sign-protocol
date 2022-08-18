@@ -1,5 +1,5 @@
-import { JSONFile } from "@commonify/lowdb";
 import LowWithLodash from "./low";
+import { MinifyJSONFile } from "./MinifyJSONFile";
 
 const md5 = require("spark-md5");
 
@@ -8,7 +8,7 @@ export default abstract class BaseDB<T> {
   public db: LowWithLodash<T>;
 
   constructor(file: string) {
-    this.adapter = new JSONFile(file);
+    this.adapter = new MinifyJSONFile(file);
     this.db = new LowWithLodash<T>(this.adapter);
   }
 
