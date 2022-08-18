@@ -8,7 +8,7 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
     super(file);
   }
 
-  private initData() {
+  protected initData() {
     this.db.data = Object.assign(
       {
         topics: [],
@@ -16,15 +16,6 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
       },
       this.db.data
     );
-  }
-
-  public async read() {
-    await this.db.read();
-    this.initData();
-  }
-
-  async write() {
-    await this.db.write();
   }
 
   /**

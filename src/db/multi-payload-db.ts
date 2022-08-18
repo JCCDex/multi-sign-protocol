@@ -8,22 +8,13 @@ export default class MultiPayloadDB extends BaseDB<IPayloads> {
     super(file);
   }
 
-  private initData() {
+  protected initData() {
     this.db.data = Object.assign(
       {
         payloads: []
       },
       this.db.data
     );
-  }
-
-  public async read() {
-    await this.db.read();
-    this.initData();
-  }
-
-  async write() {
-    await this.db.write();
   }
 
   /**

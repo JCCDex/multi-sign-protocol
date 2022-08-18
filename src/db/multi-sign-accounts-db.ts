@@ -6,22 +6,13 @@ export default class MultiSignAccountsDB extends BaseDB<IMultisignAccounts> {
     super(file);
   }
 
-  private initData() {
+  protected initData() {
     this.db.data = Object.assign(
       {
         accounts: []
       },
       this.db.data
     );
-  }
-
-  public async read() {
-    await this.db.read();
-    this.initData();
-  }
-
-  async write() {
-    await this.db.write();
   }
 
   insertAccount(data: IMultiSignAccount) {

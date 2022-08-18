@@ -3,7 +3,7 @@ import LowWithLodash from "./low";
 
 const md5 = require("spark-md5");
 
-export default class BaseDB<T> {
+export default abstract class BaseDB<T> {
   protected adapter;
   public db: LowWithLodash<T>;
 
@@ -14,5 +14,16 @@ export default class BaseDB<T> {
 
   static md5(msg: string): string {
     return md5.hash(msg);
+  }
+
+  protected abstract initData(): void;
+
+  public async read() {
+    await this.db.read();
+    this.initData();
+  }
+
+  async write() {
+    await this.db.write();
   }
 }

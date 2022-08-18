@@ -6,7 +6,7 @@ export default class BlockDB extends BaseDB<IBlock> {
     super(file);
   }
 
-  private initData() {
+  protected initData() {
     this.db.data = Object.assign(
       {
         block: null
@@ -15,17 +15,8 @@ export default class BlockDB extends BaseDB<IBlock> {
     );
   }
 
-  public async read() {
-    await this.db.read();
-    this.initData();
-  }
-
   async updateBlock(value: number) {
     this.db.data.block = value;
-  }
-
-  async write() {
-    await this.db.write();
   }
 
   block(): number {
