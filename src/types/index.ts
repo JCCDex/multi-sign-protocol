@@ -1,4 +1,4 @@
-import { IAmount } from "./common";
+import { IAmount } from "@jccdex/common";
 import { ISignerEntry } from "./db";
 
 export interface IMultiSignOptions {
