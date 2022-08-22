@@ -1,8 +1,7 @@
 import { Transaction } from "@jccdex/jingtum-lib";
 import { serializeSignerList } from "@jccdex/jingtum-lib/lib/tx";
-import { isDef } from ".";
 import { ISignerList } from "../types/tp-transfer";
-import wallet from "./wallet";
+import { isDef, wallet } from "@jccdex/common";
 
 const setSignerList = async (data: ISignerList) => {
   const { node, account, secret, signers, quorum } = data;

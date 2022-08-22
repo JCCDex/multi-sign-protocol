@@ -1,8 +1,7 @@
 import { Transaction } from "@jccdex/jingtum-lib";
 import { serializePayment } from "@jccdex/jingtum-lib/lib/tx";
-import { isDef } from ".";
 import { ITPTransfer } from "../types/tp-transfer";
-import wallet from "./wallet";
+import { isDef, wallet } from "@jccdex/common";
 
 const tp = require("tp-js-sdk");
 

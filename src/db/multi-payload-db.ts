@@ -1,6 +1,6 @@
+import { isJSON, string2json } from "@jccdex/common";
 import { IPayload } from "../types";
 import { IPayloadDB, IPayloads } from "../types/db";
-import { isJSON, string2json } from "../util";
 import BaseDB from "./base-db";
 
 export default class MultiPayloadDB extends BaseDB<IPayloads> {

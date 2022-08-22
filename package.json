@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@commonify/lowdb": "^3.0.0",
+    "@jccdex/common": "^0.0.1",
     "@jccdex/jingtum-lib": "^0.1.0",
     "@swtc/transaction": "^1.1.1",
     "@swtc/wallet": "^1.1.1",

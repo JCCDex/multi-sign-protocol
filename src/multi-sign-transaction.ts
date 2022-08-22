@@ -10,20 +10,27 @@ import {
   ISubmitMultiSigned,
   IVote
 } from "./types";
-import { IToken } from "./types/common";
-import { convertMemo, convertTime, isDef, isJSON, isPositiveInteger, isPositiveStr, string2json } from "./util";
-import wallet from "./util/wallet";
-import { isValidCurrency } from "@swtc/common";
-import { IAmount } from "./types/common";
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
-import invariant from "./util/tiny-invariant";
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import transfer from "./util/transfer-helper";
 import multiSign from "./util/sign-helper";
 import setAccount from "./util/set-account-helper";
 import setSignerList from "./util/signer-list-helper";
+import {
+  Amount,
+  wallet,
+  invariant,
+  Transaction,
+  isDef,
+  isPositiveInteger,
+  isPositiveStr,
+  string2json,
+  isJSON,
+  IAmount,
+  secondsSinceEpoch
+} from "@jccdex/common";
 const md5 = require("spark-md5");
 
 export default class MultiSignTransaction {
@@ -36,7 +43,7 @@ export default class MultiSignTransaction {
   }
 
   public static secondsSinceEpoch(): number {
-    return Math.floor(Date.now() / 1000);
+    return secondsSinceEpoch();
   }
 
   public static md5(msg: string): string {
@@ -102,9 +109,9 @@ export default class MultiSignTransaction {
       const txs = res?.data?.list;
       return txs.map((tx) => {
         const { memos } = tx || {};
-        const memo = convertMemo(memos);
+        const memo = Transaction.convertMemo(memos);
         const action = isJSON(memo) ? string2json(memo) : memo;
-        return Object.assign({}, tx, { memo: action, time: convertTime(tx.time) });
+        return Object.assign({}, tx, { memo: action, time: Transaction.convertTime(tx.time) });
       });
     }
     return [];
@@ -156,43 +163,6 @@ export default class MultiSignTransaction {
       }
     });
     return res?.result?.ledger_index;
-  }
-
-  public isNativeToken(token: IToken): boolean {
-    return (
-      (token?.currency?.toUpperCase() === "SWT" || token?.currency?.toUpperCase() === "SWTC") && token?.issuer === ""
-    );
-  }
-
-  public isNonNativeToken(token: IToken): boolean {
-    return isValidCurrency(token?.currency) && wallet.isValidAddress(token?.issuer);
-  }
-
-  public compareToken(token1: IToken, token2: IToken): boolean {
-    return (
-      (this.isNativeToken(token1) && this.isNativeToken(token2)) ||
-      (token1.currency.toUpperCase() === token2.currency.toUpperCase() && token1.issuer === token2.issuer)
-    );
-  }
-
-  public compareAmount(amount: IAmount): boolean {
-    return this.compareToken(amount, this.token) && new BigNumber(amount.value).eq(this.token.value);
-  }
-
-  public isSend(type: string): boolean {
-    return type === "Send";
-  }
-
-  public isReceive(type: string): boolean {
-    return type === "Receive";
-  }
-
-  public isSuccess(v: string): boolean {
-    return v === "tesSUCCESS";
-  }
-
-  public isAmount(amount: IAmount): boolean {
-    return new BigNumber(amount.value).isPositive() && (this.isNativeToken(amount) || this.isNonNativeToken(amount));
   }
 
   /**
@@ -420,9 +390,8 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(from) &&
       wallet.isValidAddress(to) &&
-      Number.isInteger(seq) &&
-      seq >= 0 &&
-      this.isAmount(token) &&
+      Transaction.isSequence(seq) &&
+      Amount.isValid(token) &&
       isDef(memo)
     );
   }
@@ -448,8 +417,7 @@ export default class MultiSignTransaction {
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
-      Number.isInteger(seq) &&
-      seq >= 0 &&
+      Transaction.isSequence(seq) &&
       clear_flag === 4
     );
   }
@@ -474,8 +442,7 @@ export default class MultiSignTransaction {
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
-      Number.isInteger(seq) &&
-      seq >= 0 &&
+      Transaction.isSequence(seq) &&
       isPositiveInteger(threshold) &&
       Array.isArray(lists) &&
       lists.every((l) => wallet.isValidAddress(l.account) && isPositiveInteger(l.weight));

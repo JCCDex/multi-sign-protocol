@@ -1,8 +1,7 @@
 import { Transaction } from "@jccdex/jingtum-lib";
 import { serializeSetAccount } from "@jccdex/jingtum-lib/lib/tx";
-import { isDef } from ".";
 import { IAccountSet } from "../types/tp-transfer";
-import wallet from "./wallet";
+import { isDef, wallet } from "@jccdex/common";
 
 const setAccount = async (data: IAccountSet) => {
   const { node, account, secret, disabled } = data;

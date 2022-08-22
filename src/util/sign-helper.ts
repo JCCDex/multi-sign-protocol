@@ -1,6 +1,5 @@
-import { isDef } from ".";
+import { isDef, wallet } from "@jccdex/common";
 import { IMultiSign } from "../types/tp-transfer";
-import wallet from "./wallet";
 
 const multiSign = async (data: IMultiSign) => {
   const { tx, secret } = data;

@@ -997,10 +997,28 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
+"@jccdex/common@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@jccdex/common/-/common-0.0.1.tgz#4115c5998b2175239288037e6de2af4b5dfdd279"
+  integrity sha512-xY5cxDs6PSPtQN4oUnYNB5nhKe5SsBwR6At6iH8OdTa591TRnxuODjJ3qSRUjBieQnbfI25lrRTu1I9MVB0v2w==
+  dependencies:
+    "@jccdex/jingtum-lib" "^0.1.3"
+
 "@jccdex/jingtum-lib@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jccdex/jingtum-lib/-/jingtum-lib-0.1.1.tgz#fb3756b9ee0aa7baf03fce438096d42a53c60b70"
   integrity sha512-EKZZl3IYDX/NSJdQY6IjctjFatlpFWhhj52AVazJQ+moHiXu82RxdieBNyjauPIloQUTtf1XAu25HGEgtQLpTA==
+  dependencies:
+    "@swtc/serializer" "^1.1.0"
+    "@swtc/wallet" "^1.0.20"
+    axios "^0.21.1"
+    lodash.clonedeep "^4.5.0"
+    utf8 "^3.0.0"
+
+"@jccdex/jingtum-lib@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@jccdex/jingtum-lib/-/jingtum-lib-0.1.3.tgz#1d8a27b4f8364b0f9339dd47d2c31a69cfa65796"
+  integrity sha512-+J5ZqfXWb2lGZm/iaSG8vC7mHRjoahhIVKWmslinp2zaN6k06v9vc9uhT+wguWn1m5SmVSBedfxhUVHt1yKDNQ==
   dependencies:
     "@swtc/serializer" "^1.1.0"
     "@swtc/wallet" "^1.0.20"

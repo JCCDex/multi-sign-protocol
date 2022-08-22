@@ -1,4 +1,3 @@
-export * from "./util";
 import MultiSignTransaction from "./multi-sign-transaction";
 import MultiSignAccountsDB from "./db/multi-sign-accounts-db";
 import MultiPayloadDB from "./db/multi-payload-db";
