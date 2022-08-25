@@ -18,7 +18,7 @@ export default abstract class BaseDB<T> {
 
   protected abstract initData(): void;
 
-  public async read() {
+  async read() {
     await this.db.read();
     this.initData();
   }
