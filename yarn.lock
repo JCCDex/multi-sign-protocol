@@ -997,23 +997,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jccdex/common@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@jccdex/common/-/common-0.0.1.tgz#4115c5998b2175239288037e6de2af4b5dfdd279"
-  integrity sha512-xY5cxDs6PSPtQN4oUnYNB5nhKe5SsBwR6At6iH8OdTa591TRnxuODjJ3qSRUjBieQnbfI25lrRTu1I9MVB0v2w==
+"@jccdex/common@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@jccdex/common/-/common-0.0.2.tgz#8aad80928a5a4d3b1dccf564725ebf804b9344bc"
+  integrity sha512-ADfU+ZldDbmwRjbrpXeS4rrNtWLCn9b+Kit4KkCd6CRl07Hay6I5MevwaoyAMOjNQx6Eg1XnNZwNP3PEv/8kpg==
   dependencies:
     "@jccdex/jingtum-lib" "^0.1.3"
-
-"@jccdex/jingtum-lib@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@jccdex/jingtum-lib/-/jingtum-lib-0.1.1.tgz#fb3756b9ee0aa7baf03fce438096d42a53c60b70"
-  integrity sha512-EKZZl3IYDX/NSJdQY6IjctjFatlpFWhhj52AVazJQ+moHiXu82RxdieBNyjauPIloQUTtf1XAu25HGEgtQLpTA==
-  dependencies:
-    "@swtc/serializer" "^1.1.0"
-    "@swtc/wallet" "^1.0.20"
-    axios "^0.21.1"
-    lodash.clonedeep "^4.5.0"
-    utf8 "^3.0.0"
+    tp-js-sdk "^3.7.5"
 
 "@jccdex/jingtum-lib@^0.1.3":
   version "0.1.3"
@@ -4251,7 +4241,7 @@ tough-cookie@^4.0.0:
     punycode "^2.1.1"
     universalify "^0.1.2"
 
-tp-js-sdk@^3.7.1:
+tp-js-sdk@^3.7.5:
   version "3.7.5"
   resolved "https://registry.yarnpkg.com/tp-js-sdk/-/tp-js-sdk-3.7.5.tgz#ab5b6892bb5f5fe281ee3c7b7a935623277a9b20"
   integrity sha512-VCCnYGHxLp8zXSJ+hnr7nkHPVDttXxFcnCB0pbTjI/9hu4JjWDhhMMhoxQEdWE8wl9blQzopTHzFT/80zKM7vQ==

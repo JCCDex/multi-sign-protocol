@@ -14,7 +14,7 @@ import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
-import transfer from "./util/transfer-helper";
+import { transfer } from "@jccdex/common";
 import multiSign from "./util/sign-helper";
 import setAccount from "./util/set-account-helper";
 import setSignerList from "./util/signer-list-helper";
