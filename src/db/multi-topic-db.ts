@@ -79,8 +79,7 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
         executeStatus: TopicStatus.UNEXECUTED
       })
       .filter((t) => {
-        const signs = this.filterSignsBySeq(t.data.topic.operation.seq).map((s) => s.account);
-
+        const signs = this.filterSignsByMd5(t.md5).map((s) => s.account);
         return signs.includes(address);
       })
       .value();
@@ -101,8 +100,7 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
         executeStatus: TopicStatus.UNEXECUTED
       })
       .filter((t) => {
-        const signs = this.filterSignsBySeq(t.data.topic.operation.seq).map((s) => s.account);
-
+        const signs = this.filterSignsByMd5(t.md5).map((s) => s.account);
         return !signs.includes(address);
       })
       .value();
@@ -173,16 +171,16 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
   }
 
   /**
-   * 根据seq获取所有签名
+   * 根据topic md5获取所有签名
    *
-   * @param {number} seq
+   * @param {string} md5
    * @returns {IVote[]}
    * @memberof MultiTopicDB
    */
-  filterSignsBySeq(seq: number): IVote[] {
+  filterSignsByMd5(md5: string): IVote[] {
     return this.db.chain
       .get("signs")
-      .filter((s) => s.data.multiSign.Sequence === seq)
+      .filter((s) => s.data.topicMd5 === md5)
       .map((s) => s.data)
       .value();
   }
@@ -202,16 +200,16 @@ export default class MultiTopicDB extends BaseDB<ITopics> {
   }
 
   /**
-   * 根据seq移除signs
+   * 根据topic md5移除signs
    *
    * @param {number} seq
    * @returns
    * @memberof MultiTopicDB
    */
-  removeSignsBySeq(seq: number) {
+  removeSignsByMd5(md5: string) {
     return this.db.chain
       .get("signs")
-      .remove((sign) => sign.data.multiSign.Sequence === seq)
+      .remove((sign) => sign.data.topicMd5 === md5)
       .value();
   }
 

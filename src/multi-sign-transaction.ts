@@ -267,12 +267,13 @@ export default class MultiSignTransaction {
    * @returns
    * @memberof MultiSignTransaction
    */
-  public serializeVote({ account, deadline, multiSign }) {
+  public serializeVote({ account, deadline, multiSign, md5 }) {
     const data = {
       type: MEMO_TYPE.ORACLE,
       action: ActionType.MULTI_SIGN,
       chainId: this.chainId,
       account,
+      topicMd5: md5,
       deadline,
       multiSign
     };
@@ -544,7 +545,7 @@ export default class MultiSignTransaction {
    * @memberof MultiSignTransaction
    */
   public isVote(data: IVote): boolean {
-    const { type, action, chainId, account, deadline, multiSign } = data || {};
+    const { type, action, chainId, account, deadline, multiSign, topicMd5 } = data || {};
     return (
       type === MEMO_TYPE.ORACLE &&
       chainId === this.chainId &&
@@ -552,6 +553,7 @@ export default class MultiSignTransaction {
       wallet.isValidAddress(account) &&
       isPositiveInteger(deadline) &&
       this.isBaseMultisign(multiSign) &&
+      isDef(topicMd5) &&
       account === multiSign.Signers[0].Signer.Account
     );
   }

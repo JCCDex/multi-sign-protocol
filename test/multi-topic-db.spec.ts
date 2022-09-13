@@ -62,16 +62,17 @@ describe("test MultiTopicDB", () => {
 
     test("insert sign", async () => {
       await db.read();
+      const md5 = MultiTopicDB.md5(JSON.stringify(signerSign));
       db.insertSign({
-        md5: MultiTopicDB.md5(JSON.stringify(signerSign)),
+        md5,
         data: signerSign as any
       });
       db.insertSign({
-        md5: MultiTopicDB.md5(JSON.stringify(signerSign)),
+        md5,
         data: signerSign as any
       });
 
-      const signs = db.filterSignsBySeq(46);
+      const signs = db.filterSignsByMd5("eef93004736dd56b59dda11858fa1859");
       expect(signs).toEqual([signerSign]);
       await db.write();
     });
@@ -104,11 +105,11 @@ describe("test MultiTopicDB", () => {
       }
       await db.write();
       await db.read();
-      expect(db.filterSignsBySeq(94).length).toBeGreaterThan(0);
-      db.removeSignsBySeq(94);
+      expect(db.filterSignsByMd5("bbc670b35dbcbeac9ca0fb5e4d6dd3fb").length).toBeGreaterThan(0);
+      db.removeSignsByMd5("bbc670b35dbcbeac9ca0fb5e4d6dd3fb");
       await db.write();
       await db.read();
-      expect(db.filterSignsBySeq(94)).toEqual([]);
+      expect(db.filterSignsByMd5("bbc670b35dbcbeac9ca0fb5e4d6dd3fb")).toEqual([]);
     });
   });
 
@@ -121,6 +122,7 @@ describe("test MultiTopicDB", () => {
           chainId: "0x8000013b",
           account: "jMETckC3Wtq2jAbrdHwbhCwLRxatboXrEt",
           deadline: 1658129891,
+          topicMd5: "bbc670b35dbcbeac9ca0fb5e4d6dd3fb",
           multiSign: {
             Flags: 0,
             Fee: 0.00001,
@@ -166,6 +168,7 @@ describe("test MultiTopicDB", () => {
           action: "multiSign",
           chainId: "0x8000013b",
           account: "jP3gCE8keCarT9Q25ceK3hJwhLv2wEG8Nv",
+          topicMd5: "bbc670b35dbcbeac9ca0fb5e4d6dd3fb",
           deadline: 1658129891,
           multiSign: {
             Flags: 0,
@@ -212,6 +215,7 @@ describe("test MultiTopicDB", () => {
           action: "multiSign",
           chainId: "0x8000013b",
           account: "jH8kqWhBv2u4188gCvof6EK3EgQKRoKmGy",
+          topicMd5: "bbc670b35dbcbeac9ca0fb5e4d6dd3fb",
           deadline: 1658129891,
           multiSign: {
             Flags: 0,

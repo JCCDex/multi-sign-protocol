@@ -443,7 +443,8 @@ describe("test MultiSignTransaction", () => {
       const vote = multiSignTransaction.serializeVote({
         account: multisignMember.address,
         deadline: 10000,
-        multiSign: multisigned
+        multiSign: multisigned,
+        md5: "eef93004736dd56b59dda11858fa1859"
       });
 
       expect(vote).toEqual({
@@ -451,6 +452,7 @@ describe("test MultiSignTransaction", () => {
         action: "multiSign",
         chainId: "0x8000013b",
         account: "jMeNCYoA1YEK6t2Nb2QJTiuJcMDvUmqD8D",
+        topicMd5: "eef93004736dd56b59dda11858fa1859",
         deadline: 10000,
         multiSign: {
           Account: "jG4MZDywwxisf3G3az48cT3EamRxtbmbPB",

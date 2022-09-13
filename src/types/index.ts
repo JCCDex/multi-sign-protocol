@@ -87,6 +87,7 @@ export interface ISignerSetTopic {
 export interface IVote {
   type: string;
   action: string;
+  topicMd5: string;
   chainId: string;
   account: string;
   deadline: number;
