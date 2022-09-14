@@ -516,10 +516,9 @@ export default class MultiSignTransaction {
   }
 
   private isBaseMultisign(data: IBaseMultisignTx): boolean {
-    const { Flags, Fee, TransactionType, Account, Sequence, SigningPubKey, Signers } = data || {};
+    const { Fee, TransactionType, Account, Sequence, SigningPubKey, Signers } = data || {};
 
     return (
-      Number.isInteger(Flags) &&
       new BigNumber(Fee).isPositive() &&
       isPositiveStr(TransactionType) &&
       wallet.isValidAddress(Account) &&
