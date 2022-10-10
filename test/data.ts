@@ -67,6 +67,33 @@ export const signerTopic = {
   }
 };
 
+export const createOrderTopic = {
+  type: "multi-sign",
+  template: "挂单",
+  chainId: "0x8000013b",
+  topic: {
+    name: "用SWTC换取USDT",
+    description: "缺少USDT 故用2 STWC 换取 2 USDT",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      memo: "",
+      seq: 45,
+      taker_pays: {
+        currency: "SWT",
+        issuer: "",
+        value: 2
+      },
+      taker_gets: {
+        currency: "JUSDT",
+        issuer: "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+        value: 2
+      }
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

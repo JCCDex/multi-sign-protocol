@@ -1,6 +1,6 @@
 import { test, describe, expect } from "@jest/globals";
 import MultiSignTransaction from "../src/multi-sign-transaction";
-import { enableTopic, paymentTopic, signerTopic } from "./data";
+import { enableTopic, paymentTopic, signerTopic, createOrderTopic } from "./data";
 
 describe("test MultiSignTransaction", () => {
   const multiSignTransaction = new MultiSignTransaction({
@@ -365,6 +365,33 @@ describe("test MultiSignTransaction", () => {
       for (const topic of invalidTopics) {
         expect(multiSignTransaction.isSignerSetTopic(topic)).toEqual(false);
       }
+    });
+  });
+
+  describe("te(st isCreateOrderTopic & serializeCreateOrderTopic API", () => {
+    test("data is createOrder topic", async () => {
+      const d = multiSignTransaction.serializeCreateOrderTopic({
+        name: "用SWTC换取USDT",
+        description: "缺少USDT 故用2 STWC 换取 2 USDT",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        memo: "",
+        seq: 45,
+        taker_pays: {
+          currency: "SWT",
+          issuer: "",
+          value: 2
+        },
+        taker_gets: {
+          currency: "JUSDT",
+          issuer: "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+          value: 2
+        }
+      });
+
+      expect(d).toEqual(createOrderTopic);
+
+      expect(multiSignTransaction.isCreateOrderTopic(d)).toEqual(true);
     });
   });
 

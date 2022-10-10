@@ -6,13 +6,14 @@ import {
   IMultiSignOptions,
   IPayload,
   IPaymentTopic,
+  ICreateOrderTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
 } from "./types";
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
-import { ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
+import { CREATE_ORDER_TEMPLATE, ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import { transfer } from "@jccdex/common";
 import multiSign from "./util/sign-helper";
@@ -192,6 +193,45 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isPaymentTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化挂单topic
+   *
+   * @param {*} { name, description, deadline, account, taker_pays, taker_gets, memo, seq }
+   * @returns {ICreateOrderTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeCreateOrderTopic({
+    name,
+    description,
+    deadline,
+    account,
+    taker_pays,
+    taker_gets,
+    memo,
+    seq
+  }): ICreateOrderTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: CREATE_ORDER_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          memo: memo || "",
+          account,
+          seq,
+          taker_gets,
+          taker_pays
+        }
+      }
+    };
+    invariant(this.isCreateOrderTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -554,6 +594,33 @@ export default class MultiSignTransaction {
       this.isBaseMultisign(multiSign) &&
       isDef(topicMd5) &&
       account === multiSign.Signers[0].Signer.Account
+    );
+  }
+
+  /**
+   * 是否是挂单信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isCreateOrderTopic(data: ICreateOrderTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, memo, account, seq, taker_gets, taker_pays } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      isDef(memo) &&
+      wallet.isValidAddress(account) &&
+      Transaction.isSequence(seq) &&
+      Amount.isValid(taker_gets) &&
+      Amount.isValid(taker_pays)
     );
   }
 
