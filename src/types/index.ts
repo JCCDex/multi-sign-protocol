@@ -151,6 +151,30 @@ export interface IRemoveBlackListTopic {
 }
 
 /**
+ * 通证发行topic
+ *
+ * @export
+ * @interface IIssueSetTopic
+ */
+export interface IIssueSetTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      managerAccount: string;
+      amount: IAmount;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export

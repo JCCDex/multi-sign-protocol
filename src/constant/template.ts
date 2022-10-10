@@ -45,3 +45,9 @@ export const REMOVE_BLACK_LIST_TEMPLATE = {
   name: "解冻账号",
   chainId: "0x8000013b"
 };
+
+export const ISSUE_SET_TEMPLATE = {
+  type: "template",
+  name: "通证发行",
+  chainId: "0x8000013b"
+};
