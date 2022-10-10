@@ -193,7 +193,7 @@ export const issueSetTopic = {
 
 export const setTokenIssueTopic = {
   type: "multi-sign",
-  template: "nft发行",
+  template: "NFT发行",
   chainId: "0x8000013b",
   topic: {
     name: "NFT发行",
