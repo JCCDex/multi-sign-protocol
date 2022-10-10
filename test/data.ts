@@ -191,6 +191,26 @@ export const issueSetTopic = {
   }
 };
 
+export const setTokenIssueTopic = {
+  type: "multi-sign",
+  template: "NFT发行",
+  chainId: "0x8000013b",
+  topic: {
+    name: "NFT发行",
+    description: "因图片精美,故将该图片做成nft",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      publisher: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      token: "某某图片",
+      number: 1,
+      memo: "",
+      seq: 52
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

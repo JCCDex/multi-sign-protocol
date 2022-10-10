@@ -175,6 +175,32 @@ export interface IIssueSetTopic {
 }
 
 /**
+ * NFT发行topic
+ *
+ * @export
+ * @interface ISetTokenIssueTopic
+ */
+export interface ISetTokenIssueTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      publisher: string;
+      token: string;
+      number: number;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export

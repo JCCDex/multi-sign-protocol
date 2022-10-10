@@ -9,7 +9,8 @@ import {
   setLimitTopic,
   setBlackListTopic,
   removeBlackListTopic,
-  issueSetTopic
+  issueSetTopic,
+  setTokenIssueTopic
 } from "./data";
 
 describe("test MultiSignTransaction", () => {
@@ -499,6 +500,26 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(issueSetTopic);
 
       expect(multiSignTransaction.isIssueSetTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isSetTokenIssueTopic & serializeSetTokenIssueTopic API", () => {
+    test("data is setTokenIssue topic", async () => {
+      const d = multiSignTransaction.serializeSetTokenIssueTopic({
+        name: "NFT发行",
+        description: "因图片精美,故将该图片做成nft",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        publisher: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        token: "某某图片",
+        number: 1,
+        memo: "",
+        seq: 52
+      });
+
+      expect(d).toEqual(setTokenIssueTopic);
+
+      expect(multiSignTransaction.isSetTokenIssueTopic(d)).toEqual(true);
     });
   });
 

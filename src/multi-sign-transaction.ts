@@ -12,6 +12,7 @@ import {
   ISetBlackListTopic,
   IRemoveBlackListTopic,
   IIssueSetTopic,
+  ISetTokenIssueTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -19,6 +20,7 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  SET_TOKEN_ISSUE_TEMPLATE,
   ISSUE_SET_TEMPLATE,
   REMOVE_BLACK_LIST_TEMPLATE,
   SET_BLACK_LIST_TEMPLATE,
@@ -407,6 +409,47 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isIssueSetTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化NFT发行topic
+   *
+   * @param {*} { name, description, deadline, account, publisher, token, number, memo, seq }
+   * @returns {ISetTokenIssueTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeSetTokenIssueTopic({
+    name,
+    description,
+    deadline,
+    account,
+    publisher,
+    token,
+    number,
+    memo,
+    seq
+  }): ISetTokenIssueTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: SET_TOKEN_ISSUE_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          publisher,
+          token,
+          number,
+          memo,
+          seq
+        }
+      }
+    };
+    invariant(this.isSetTokenIssueTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -923,6 +966,34 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(managerAccount) &&
       Amount.isValid(amount) &&
+      isDef(memo) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是NFT发行信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isSetTokenIssueTopic(data: ISetTokenIssueTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, publisher, token, number, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      wallet.isValidAddress(publisher) &&
+      isPositiveStr(token) &&
+      isPositiveInteger(number) &&
       isDef(memo) &&
       Transaction.isSequence(seq)
     );
