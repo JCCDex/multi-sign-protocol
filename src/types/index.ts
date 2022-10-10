@@ -31,6 +31,31 @@ export interface IPaymentTopic {
 }
 
 /**
+ * 挂单topic
+ *
+ * @export
+ * @interface ICreateOrderTopic
+ */
+export interface ICreateOrderTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      memo: string;
+      account: string;
+      seq: number;
+      taker_pays: IAmount;
+      taker_gets: IAmount;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export

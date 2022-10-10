@@ -1,7 +1,8 @@
 export enum OperationType {
   PAYMENT = "Payment",
   ACCOUNT_SET = "AccountSet",
-  SIGNER_LIST_SET = "SignerListSet"
+  SIGNER_LIST_SET = "SignerListSet",
+  CREATE_ORDER = "create-order"
 }
 
 export enum ActionType {

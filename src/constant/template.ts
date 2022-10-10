@@ -15,3 +15,9 @@ export const SIGNER_SET_TEMPLATE = {
   name: "多签成员管理",
   chainId: "0x8000013b"
 };
+
+export const CREATE_ORDER_TEMPLATE = {
+  type: "template",
+  name: "挂单",
+  chainId: "0x8000013b"
+};
