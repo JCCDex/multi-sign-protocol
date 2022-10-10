@@ -175,7 +175,7 @@ export interface IIssueSetTopic {
 }
 
 /**
- * nft发行topic
+ * NFT发行topic
  *
  * @export
  * @interface ISetTokenIssueTopic

@@ -413,7 +413,7 @@ export default class MultiSignTransaction {
   }
 
   /**
-   * 序列化nft发行topic
+   * 序列化NFT发行topic
    *
    * @param {*} { name, description, deadline, account, publisher, token, number, memo, seq }
    * @returns {ISetTokenIssueTopic}
@@ -972,7 +972,7 @@ export default class MultiSignTransaction {
   }
 
   /**
-   * 是否是nft发行信息
+   * 是否是NFT发行信息
    *
    * @param {*} data
    * @returns {boolean}

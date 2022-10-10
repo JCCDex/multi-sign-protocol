@@ -506,7 +506,7 @@ describe("test MultiSignTransaction", () => {
   describe("test isSetTokenIssueTopic & serializeSetTokenIssueTopic API", () => {
     test("data is setTokenIssue topic", async () => {
       const d = multiSignTransaction.serializeSetTokenIssueTopic({
-        name: "nft发行",
+        name: "NFT发行",
         description: "因图片精美,故将该图片做成nft",
         deadline: 1658129891,
         account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",

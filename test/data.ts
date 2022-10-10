@@ -196,7 +196,7 @@ export const setTokenIssueTopic = {
   template: "nft发行",
   chainId: "0x8000013b",
   topic: {
-    name: "nft发行",
+    name: "NFT发行",
     description: "因图片精美,故将该图片做成nft",
     deadline: 1658129891,
     operation: {

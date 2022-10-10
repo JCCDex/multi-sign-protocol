@@ -54,6 +54,6 @@ export const ISSUE_SET_TEMPLATE = {
 
 export const SET_TOKEN_ISSUE_TEMPLATE = {
   type: "template",
-  name: "nft发行",
+  name: "NFT发行",
   chainId: "0x8000013b"
 };
