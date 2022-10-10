@@ -7,7 +7,8 @@ import {
   createOrderTopic,
   cancelOrderTopic,
   setLimitTopic,
-  setBlackListTopic
+  setBlackListTopic,
+  removeBlackListTopic
 } from "./data";
 
 describe("test MultiSignTransaction", () => {
@@ -457,6 +458,24 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(setBlackListTopic);
 
       expect(multiSignTransaction.isSetBlackListTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isRemoveBlackListTopic & serializeRemoveBlackListTopic API", () => {
+    test("data is removeBlackList topic", async () => {
+      const d = multiSignTransaction.serializeRemoveBlackListTopic({
+        name: "解冻账号",
+        description: "因为j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j持有人做出贡献,故解冻该账号",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        blockAccount: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        memo: "",
+        seq: 50
+      });
+
+      expect(d).toEqual(removeBlackListTopic);
+
+      expect(multiSignTransaction.isRemoveBlackListTopic(d)).toEqual(true);
     });
   });
 

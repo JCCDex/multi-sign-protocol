@@ -151,6 +151,24 @@ export const setBlackListTopic = {
   }
 };
 
+export const removeBlackListTopic = {
+  type: "multi-sign",
+  template: "解冻账号",
+  chainId: "0x8000013b",
+  topic: {
+    name: "解冻账号",
+    description: "因为j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j持有人做出贡献,故解冻该账号",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      blockAccount: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+      memo: "",
+      seq: 50
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",
