@@ -94,6 +94,23 @@ export const createOrderTopic = {
   }
 };
 
+export const cancelOrderTopic = {
+  type: "multi-sign",
+  template: "撤单",
+  chainId: "0x8000013b",
+  topic: {
+    name: "撤销换取USDT",
+    description: "USDT够了 故撤销换取USDT",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      orderSeq: 46,
+      seq: 47
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

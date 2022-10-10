@@ -56,6 +56,29 @@ export interface ICreateOrderTopic {
 }
 
 /**
+ * 撤单topic
+ *
+ * @export
+ * @interface ICancelOrderTopic
+ */
+export interface ICancelOrderTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      orderSeq: number;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export
