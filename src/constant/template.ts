@@ -27,3 +27,9 @@ export const CANCEL_ORDER_TEMPLATE = {
   name: "撤单",
   chainId: "0x8000013b"
 };
+
+export const SET_LIMIT_TEMPLATE = {
+  type: "template",
+  name: "设置资产上限",
+  chainId: "0x8000013b"
+};

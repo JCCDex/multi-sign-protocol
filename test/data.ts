@@ -111,6 +111,28 @@ export const cancelOrderTopic = {
   }
 };
 
+export const setLimitTopic = {
+  type: "multi-sign",
+  template: "设置资产上限",
+  chainId: "0x8000013b",
+  topic: {
+    name: "设置资产上限",
+    description: "为了方便管理 故设置多签账号的资产上限为20000个SWTC",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      limit: {
+        currency: "SWT",
+        issuer: "",
+        value: 20000
+      },
+      memo: "",
+      seq: 48
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

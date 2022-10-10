@@ -79,6 +79,30 @@ export interface ICancelOrderTopic {
 }
 
 /**
+ * 设置资产上限topic
+ *
+ * @export
+ * @interface ISetLimitTopic
+ */
+export interface ISetLimitTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      limit: IAmount;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export

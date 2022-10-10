@@ -8,6 +8,7 @@ import {
   IPaymentTopic,
   ICreateOrderTopic,
   ICancelOrderTopic,
+  ISetLimitTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -15,6 +16,7 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  SET_LIMIT_TEMPLATE,
   CANCEL_ORDER_TEMPLATE,
   CREATE_ORDER_TEMPLATE,
   ENABLE_TEMPLATE,
@@ -267,6 +269,35 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isCancelOrderTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化设置资产上限topic
+   *
+   * @param {*} { name, description, deadline, account, limit, memo, seq }
+   * @returns {ISetLimitTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeSetLimitTopic({ name, description, deadline, account, limit, memo, seq }): ISetLimitTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: SET_LIMIT_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          limit,
+          memo: memo || "",
+          seq
+        }
+      }
+    };
+    invariant(this.isSetLimitTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -680,6 +711,32 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
       Transaction.isSequence(orderSeq) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是设置资产上限信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isSetLimitTopic(data: ISetLimitTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, limit, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      Amount.isValid(limit) &&
+      isDef(memo) &&
       Transaction.isSequence(seq)
     );
   }
