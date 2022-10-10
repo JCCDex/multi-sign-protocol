@@ -39,3 +39,9 @@ export const SET_BLACK_LIST_TEMPLATE = {
   name: "冻结账号",
   chainId: "0x8000013b"
 };
+
+export const REMOVE_BLACK_LIST_TEMPLATE = {
+  type: "template",
+  name: "解冻账号",
+  chainId: "0x8000013b"
+};
