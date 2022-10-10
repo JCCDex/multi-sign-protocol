@@ -169,6 +169,28 @@ export const removeBlackListTopic = {
   }
 };
 
+export const issueSetTopic = {
+  type: "multi-sign",
+  template: "通证发行",
+  chainId: "0x8000013b",
+  topic: {
+    name: "通证发行",
+    description: "应某超市要求，发行该超市10000000个通证",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      managerAccount: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      amount: {
+        currency: "mmt",
+        issuer: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        value: 10000000
+      },
+      memo: "",
+      seq: 51
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

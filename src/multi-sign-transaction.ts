@@ -11,6 +11,7 @@ import {
   ISetLimitTopic,
   ISetBlackListTopic,
   IRemoveBlackListTopic,
+  IIssueSetTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -18,6 +19,7 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  ISSUE_SET_TEMPLATE,
   REMOVE_BLACK_LIST_TEMPLATE,
   SET_BLACK_LIST_TEMPLATE,
   SET_LIMIT_TEMPLATE,
@@ -376,6 +378,35 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isRemoveBlackListTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化通证发行topic
+   *
+   * @param {*} { name, description, deadline, managerAccount, amount, memo, seq }
+   * @returns {IIssueSetTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeIssueSetTopic({ name, description, deadline, managerAccount, amount, memo, seq }): IIssueSetTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: ISSUE_SET_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          managerAccount,
+          amount,
+          memo,
+          seq
+        }
+      }
+    };
+    invariant(this.isIssueSetTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -866,6 +897,32 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
       wallet.isValidAddress(blockAccount) &&
+      isDef(memo) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是通证发行信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isIssueSetTopic(data: IIssueSetTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, managerAccount, amount, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(managerAccount) &&
+      Amount.isValid(amount) &&
       isDef(memo) &&
       Transaction.isSequence(seq)
     );

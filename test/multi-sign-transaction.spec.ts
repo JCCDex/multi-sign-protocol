@@ -8,7 +8,8 @@ import {
   cancelOrderTopic,
   setLimitTopic,
   setBlackListTopic,
-  removeBlackListTopic
+  removeBlackListTopic,
+  issueSetTopic
 } from "./data";
 
 describe("test MultiSignTransaction", () => {
@@ -476,6 +477,28 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(removeBlackListTopic);
 
       expect(multiSignTransaction.isRemoveBlackListTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isIssueSetTopic & serializeIssueSetTopic API", () => {
+    test("data is issueSet topic", async () => {
+      const d = multiSignTransaction.serializeIssueSetTopic({
+        name: "通证发行",
+        description: "应某超市要求，发行该超市10000000个通证",
+        deadline: 1658129891,
+        managerAccount: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        amount: {
+          currency: "mmt",
+          issuer: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+          value: 10000000
+        },
+        memo: "",
+        seq: 51
+      });
+
+      expect(d).toEqual(issueSetTopic);
+
+      expect(multiSignTransaction.isIssueSetTopic(d)).toEqual(true);
     });
   });
 
