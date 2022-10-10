@@ -103,6 +103,30 @@ export interface ISetLimitTopic {
 }
 
 /**
+ * 冻结账号topic
+ *
+ * @export
+ * @interface ISetBlackListTopic
+ */
+export interface ISetBlackListTopic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      blockAccount: string;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export

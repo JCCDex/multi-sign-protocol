@@ -133,6 +133,24 @@ export const setLimitTopic = {
   }
 };
 
+export const setBlackListTopic = {
+  type: "multi-sign",
+  template: "冻结账号",
+  chainId: "0x8000013b",
+  topic: {
+    name: "冻结账号",
+    description: "因为j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j违规操作,故冻结该账号",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      blockAccount: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+      memo: "",
+      seq: 49
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

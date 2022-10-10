@@ -1,6 +1,14 @@
 import { test, describe, expect } from "@jest/globals";
 import MultiSignTransaction from "../src/multi-sign-transaction";
-import { enableTopic, paymentTopic, signerTopic, createOrderTopic, cancelOrderTopic, setLimitTopic } from "./data";
+import {
+  enableTopic,
+  paymentTopic,
+  signerTopic,
+  createOrderTopic,
+  cancelOrderTopic,
+  setLimitTopic,
+  setBlackListTopic
+} from "./data";
 
 describe("test MultiSignTransaction", () => {
   const multiSignTransaction = new MultiSignTransaction({
@@ -431,6 +439,24 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(setLimitTopic);
 
       expect(multiSignTransaction.isSetLimitTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isSetBlackListTopic & serializeSetBlackListTopic API", () => {
+    test("data is setBlackList topic", async () => {
+      const d = multiSignTransaction.serializeSetBlackListTopic({
+        name: "冻结账号",
+        description: "因为j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j违规操作,故冻结该账号",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        blockAccount: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        memo: "",
+        seq: 49
+      });
+
+      expect(d).toEqual(setBlackListTopic);
+
+      expect(multiSignTransaction.isSetBlackListTopic(d)).toEqual(true);
     });
   });
 
