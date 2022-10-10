@@ -1,6 +1,6 @@
 import { test, describe, expect } from "@jest/globals";
 import MultiSignTransaction from "../src/multi-sign-transaction";
-import { enableTopic, paymentTopic, signerTopic, createOrderTopic, cancelOrderTopic } from "./data";
+import { enableTopic, paymentTopic, signerTopic, createOrderTopic, cancelOrderTopic, setLimitTopic } from "./data";
 
 describe("test MultiSignTransaction", () => {
   const multiSignTransaction = new MultiSignTransaction({
@@ -409,6 +409,28 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(cancelOrderTopic);
 
       expect(multiSignTransaction.isCancelOrderTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isSetLimitTopic & serializeSetLimitTopic API", () => {
+    test("data is setLimit topic", async () => {
+      const d = multiSignTransaction.serializeSetLimitTopic({
+        name: "设置资产上限",
+        description: "为了方便管理 故设置多签账号的资产上限为20000个SWTC",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        limit: {
+          currency: "SWT",
+          issuer: "",
+          value: 20000
+        },
+        memo: "",
+        seq: 48
+      });
+
+      expect(d).toEqual(setLimitTopic);
+
+      expect(multiSignTransaction.isSetLimitTopic(d)).toEqual(true);
     });
   });
 
