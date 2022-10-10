@@ -9,6 +9,7 @@ import {
   ICreateOrderTopic,
   ICancelOrderTopic,
   ISetLimitTopic,
+  ISetBlackListTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -16,6 +17,7 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  SET_BLACK_LIST_TEMPLATE,
   SET_LIMIT_TEMPLATE,
   CANCEL_ORDER_TEMPLATE,
   CREATE_ORDER_TEMPLATE,
@@ -298,6 +300,43 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isSetLimitTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化冻结账号topic
+   *
+   * @param {*} { name, description, deadline, account, blockAccount, memo, seq }
+   * @returns {ISetBlackListTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeSetBlackListTopic({
+    name,
+    description,
+    deadline,
+    account,
+    blockAccount,
+    memo,
+    seq
+  }): ISetBlackListTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: SET_BLACK_LIST_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          blockAccount,
+          memo,
+          seq
+        }
+      }
+    };
+    invariant(this.isSetBlackListTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -736,6 +775,32 @@ export default class MultiSignTransaction {
       chainId === this.chainId &&
       wallet.isValidAddress(account) &&
       Amount.isValid(limit) &&
+      isDef(memo) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是冻结账户信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isSetBlackListTopic(data: ISetBlackListTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, blockAccount, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      wallet.isValidAddress(blockAccount) &&
       isDef(memo) &&
       Transaction.isSequence(seq)
     );

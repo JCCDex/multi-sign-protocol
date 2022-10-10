@@ -33,3 +33,9 @@ export const SET_LIMIT_TEMPLATE = {
   name: "设置资产上限",
   chainId: "0x8000013b"
 };
+
+export const SET_BLACK_LIST_TEMPLATE = {
+  type: "template",
+  name: "冻结账号",
+  chainId: "0x8000013b"
+};
