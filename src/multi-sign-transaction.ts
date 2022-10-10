@@ -7,13 +7,20 @@ import {
   IPayload,
   IPaymentTopic,
   ICreateOrderTopic,
+  ICancelOrderTopic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
 } from "./types";
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
-import { CREATE_ORDER_TEMPLATE, ENABLE_TEMPLATE, PAYMENT_TEMPLATE, SIGNER_SET_TEMPLATE } from "./constant/template";
+import {
+  CANCEL_ORDER_TEMPLATE,
+  CREATE_ORDER_TEMPLATE,
+  ENABLE_TEMPLATE,
+  PAYMENT_TEMPLATE,
+  SIGNER_SET_TEMPLATE
+} from "./constant/template";
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import { transfer } from "@jccdex/common";
 import multiSign from "./util/sign-helper";
@@ -232,6 +239,34 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isCreateOrderTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化撤单topic
+   *
+   * @param {*} { name, description, deadline, account, orderSeq, seq }
+   * @returns {ICancelOrderTopic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeCancelOrderTopic({ name, description, deadline, account, orderSeq, seq }): ICancelOrderTopic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: CANCEL_ORDER_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          orderSeq,
+          seq
+        }
+      }
+    };
+    invariant(this.isCancelOrderTopic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -621,6 +656,31 @@ export default class MultiSignTransaction {
       Transaction.isSequence(seq) &&
       Amount.isValid(taker_gets) &&
       Amount.isValid(taker_pays)
+    );
+  }
+
+  /**
+   * 是否是撤单信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isCancelOrderTopic(data: ICancelOrderTopic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, orderSeq, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      Transaction.isSequence(orderSeq) &&
+      Transaction.isSequence(seq)
     );
   }
 

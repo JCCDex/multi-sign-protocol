@@ -21,3 +21,9 @@ export const CREATE_ORDER_TEMPLATE = {
   name: "挂单",
   chainId: "0x8000013b"
 };
+
+export const CANCEL_ORDER_TEMPLATE = {
+  type: "template",
+  name: "撤单",
+  chainId: "0x8000013b"
+};
