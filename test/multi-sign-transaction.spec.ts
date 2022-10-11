@@ -11,7 +11,9 @@ import {
   removeBlackListTopic,
   issueSetTopic,
   setTokenIssueTopic,
-  publish721Topic
+  publish721Topic,
+  transfer721Topic,
+  delete721Topic
 } from "./data";
 
 describe("test MultiSignTransaction", () => {
@@ -586,6 +588,43 @@ describe("test MultiSignTransaction", () => {
       expect(d1).toEqual(publish721Topic1);
 
       expect(multiSignTransaction.isPublish721Topic(d1)).toEqual(true);
+    });
+  });
+
+  describe("test isTransfer721Topic & serializeTransfer721Topic API", () => {
+    test("data is transfer721 topic", async () => {
+      const d = multiSignTransaction.serializeTransfer721Topic({
+        name: "NFT转账",
+        description: "因j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j做出贡献,故将这个NFT给他",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+        memo: "",
+        seq: 52
+      });
+      console.log(d);
+      expect(d).toEqual(transfer721Topic);
+
+      expect(multiSignTransaction.isTransfer721Topic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isDelete721Topic & serializeDelete721Topic API", () => {
+    test("data is delete721 topic", async () => {
+      const d = multiSignTransaction.serializeDelete721Topic({
+        name: "销毁NFT",
+        description: "因NFT无人接手,故将这个NFT销毁",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+        memo: "",
+        seq: 52
+      });
+      console.log(d);
+      expect(d).toEqual(delete721Topic);
+
+      expect(multiSignTransaction.isDelete721Topic(d)).toEqual(true);
     });
   });
 

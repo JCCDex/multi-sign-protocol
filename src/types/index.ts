@@ -238,6 +238,55 @@ export interface IPublish721Topic {
 }
 
 /**
+ * NFT转账topic
+ *
+ * @export
+ * @interface ITransfer721Topic
+ */
+export interface ITransfer721Topic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      receiver: string;
+      tokenId: string;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
+ * 销毁NFTtopic
+ *
+ * @export
+ * @interface IDelete721Topic
+ */
+export interface IDelete721Topic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      tokenId: string;
+      memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
  * 恢复密钥topic
  *
  * @export
