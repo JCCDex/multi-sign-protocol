@@ -10,7 +10,8 @@ import {
   setBlackListTopic,
   removeBlackListTopic,
   issueSetTopic,
-  setTokenIssueTopic
+  setTokenIssueTopic,
+  publish721Topic
 } from "./data";
 
 describe("test MultiSignTransaction", () => {
@@ -487,7 +488,7 @@ describe("test MultiSignTransaction", () => {
         name: "通证发行",
         description: "应某超市要求，发行该超市10000000个通证",
         deadline: 1658129891,
-        managerAccount: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
         amount: {
           currency: "mmt",
           issuer: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
@@ -520,6 +521,71 @@ describe("test MultiSignTransaction", () => {
       expect(d).toEqual(setTokenIssueTopic);
 
       expect(multiSignTransaction.isSetTokenIssueTopic(d)).toEqual(true);
+    });
+  });
+
+  describe("test isPublish721Topic & serializePublish721Topic API", () => {
+    test("data is publish721 topic", async () => {
+      const d = multiSignTransaction.serializePublish721Topic({
+        name: "铸造NFT",
+        description: "因图片精美,故将该图片铸造成nft",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        token: "某某图片",
+        tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+        infos: [
+          {
+            type: "jpg",
+            data: "1"
+          },
+          {
+            type: "jpg",
+            data: "2"
+          }
+        ],
+        seq: 52
+      });
+
+      expect(d).toEqual(publish721Topic);
+
+      expect(multiSignTransaction.isPublish721Topic(d)).toEqual(true);
+
+      const publish721Topic1 = {
+        type: "multi-sign",
+        template: "铸造NFT",
+        chainId: "0x8000013b",
+        topic: {
+          name: "铸造NFT",
+          description: "因图片精美,故将该图片铸造成nft",
+          deadline: 1658129891,
+          operation: {
+            chainId: "0x8000013b",
+            account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+            receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+            token: "某某图片",
+            tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+            infos: [],
+            seq: 52
+          }
+        }
+      };
+
+      const d1 = multiSignTransaction.serializePublish721Topic({
+        name: "铸造NFT",
+        description: "因图片精美,故将该图片铸造成nft",
+        deadline: 1658129891,
+        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+        token: "某某图片",
+        tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+        infos: undefined,
+        seq: 52
+      });
+
+      expect(d1).toEqual(publish721Topic1);
+
+      expect(multiSignTransaction.isPublish721Topic(d1)).toEqual(true);
     });
   });
 

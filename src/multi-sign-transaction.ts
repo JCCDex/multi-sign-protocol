@@ -13,6 +13,7 @@ import {
   IRemoveBlackListTopic,
   IIssueSetTopic,
   ISetTokenIssueTopic,
+  IPublish721Topic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -20,6 +21,7 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  PUBLISH_721_TEMPLATE,
   SET_TOKEN_ISSUE_TEMPLATE,
   ISSUE_SET_TEMPLATE,
   REMOVE_BLACK_LIST_TEMPLATE,
@@ -34,6 +36,7 @@ import {
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import { transfer } from "@jccdex/common";
 import multiSign from "./util/sign-helper";
+import { isHex64Str } from "./util";
 import setAccount from "./util/set-account-helper";
 import setSignerList from "./util/signer-list-helper";
 import {
@@ -202,7 +205,7 @@ export default class MultiSignTransaction {
         operation: {
           chainId: this.chainId,
           memo: memo || "",
-          from,
+          account: from,
           to,
           seq,
           token
@@ -386,11 +389,11 @@ export default class MultiSignTransaction {
   /**
    * 序列化通证发行topic
    *
-   * @param {*} { name, description, deadline, managerAccount, amount, memo, seq }
+   * @param {*} { name, description, deadline, account, amount, memo, seq }
    * @returns {IIssueSetTopic}
    * @memberof MultiSignTransaction
    */
-  public serializeIssueSetTopic({ name, description, deadline, managerAccount, amount, memo, seq }): IIssueSetTopic {
+  public serializeIssueSetTopic({ name, description, deadline, account, amount, memo, seq }): IIssueSetTopic {
     const data = {
       type: MEMO_TYPE.MULTI_SIGN,
       template: ISSUE_SET_TEMPLATE.name,
@@ -401,7 +404,7 @@ export default class MultiSignTransaction {
         deadline,
         operation: {
           chainId: this.chainId,
-          managerAccount,
+          account,
           amount,
           memo,
           seq
@@ -450,6 +453,47 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isSetTokenIssueTopic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化铸造NFTtopic
+   *
+   * @param {*} { name, description, deadline, account, receiver, token, tokenId, infos, seq }
+   * @returns {IPublish721Topic}
+   * @memberof MultiSignTransaction
+   */
+  public serializePublish721Topic({
+    name,
+    description,
+    deadline,
+    account,
+    receiver,
+    token,
+    tokenId,
+    infos,
+    seq
+  }): IPublish721Topic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: PUBLISH_721_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          receiver,
+          token,
+          tokenId,
+          infos: isDef(infos) ? infos : [],
+          seq
+        }
+      }
+    };
+    invariant(this.isPublish721Topic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -638,7 +682,7 @@ export default class MultiSignTransaction {
   public isPaymentTopic(data: IPaymentTopic): boolean {
     const { type, template, topic } = data || {};
     const { name, description, deadline, operation } = topic || {};
-    const { chainId, from, to, seq, token, memo } = operation || {};
+    const { chainId, account, to, seq, token, memo } = operation || {};
     return (
       type === MEMO_TYPE.MULTI_SIGN &&
       isPositiveStr(template) &&
@@ -647,7 +691,7 @@ export default class MultiSignTransaction {
       isPositiveStr(description) &&
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
-      wallet.isValidAddress(from) &&
+      wallet.isValidAddress(account) &&
       wallet.isValidAddress(to) &&
       Transaction.isSequence(seq) &&
       Amount.isValid(token) &&
@@ -955,7 +999,7 @@ export default class MultiSignTransaction {
   public isIssueSetTopic(data: IIssueSetTopic): boolean {
     const { type, template, topic } = data || {};
     const { name, description, deadline, operation } = topic || {};
-    const { chainId, managerAccount, amount, memo, seq } = operation || {};
+    const { chainId, account, amount, memo, seq } = operation || {};
     return (
       type === MEMO_TYPE.MULTI_SIGN &&
       isPositiveStr(template) &&
@@ -964,7 +1008,7 @@ export default class MultiSignTransaction {
       isPositiveStr(description) &&
       isPositiveInteger(deadline) &&
       chainId === this.chainId &&
-      wallet.isValidAddress(managerAccount) &&
+      wallet.isValidAddress(account) &&
       Amount.isValid(amount) &&
       isDef(memo) &&
       Transaction.isSequence(seq)
@@ -995,6 +1039,36 @@ export default class MultiSignTransaction {
       isPositiveStr(token) &&
       isPositiveInteger(number) &&
       isDef(memo) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是铸造NFT信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isPublish721Topic(data: IPublish721Topic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, receiver, token, tokenId, infos, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      wallet.isValidAddress(receiver) &&
+      isPositiveStr(token) &&
+      isHex64Str(tokenId) &&
+      infos.every((d) => {
+        return isPositiveStr(d.type) && isPositiveStr(d.data);
+      }) &&
       Transaction.isSequence(seq)
     );
   }

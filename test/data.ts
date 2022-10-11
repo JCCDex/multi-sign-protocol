@@ -8,7 +8,7 @@ export const paymentTopic = {
     deadline: 1658129891,
     operation: {
       chainId: "0x8000013b",
-      from: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
       to: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
       memo: "",
       seq: 44,
@@ -179,7 +179,7 @@ export const issueSetTopic = {
     deadline: 1658129891,
     operation: {
       chainId: "0x8000013b",
-      managerAccount: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
       amount: {
         currency: "mmt",
         issuer: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
@@ -206,6 +206,35 @@ export const setTokenIssueTopic = {
       token: "某某图片",
       number: 1,
       memo: "",
+      seq: 52
+    }
+  }
+};
+
+export const publish721Topic = {
+  type: "multi-sign",
+  template: "铸造NFT",
+  chainId: "0x8000013b",
+  topic: {
+    name: "铸造NFT",
+    description: "因图片精美,故将该图片铸造成nft",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+      token: "某某图片",
+      tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+      infos: [
+        {
+          type: "jpg",
+          data: "1"
+        },
+        {
+          type: "jpg",
+          data: "2"
+        }
+      ],
       seq: 52
     }
   }
