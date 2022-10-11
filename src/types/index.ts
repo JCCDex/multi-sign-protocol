@@ -22,7 +22,7 @@ export interface IPaymentTopic {
     operation: {
       chainId: string;
       memo: string;
-      from: string;
+      account: string;
       to: string;
       seq: number;
       token: IAmount;
@@ -166,7 +166,7 @@ export interface IIssueSetTopic {
     deadline: number;
     operation: {
       chainId: string;
-      managerAccount: string;
+      account: string;
       amount: IAmount;
       memo: string;
       seq: number;
@@ -195,6 +195,43 @@ export interface ISetTokenIssueTopic {
       token: string;
       number: number;
       memo: string;
+      seq: number;
+    };
+  };
+}
+
+/**
+ * Token的信息
+ *
+ * @export
+ * @interface ITokenInfo
+ */
+export interface ITokenInfo {
+  type: string;
+  data: string;
+}
+
+/**
+ * 铸造NFTtopic
+ *
+ * @export
+ * @interface IPublish721Topic
+ */
+export interface IPublish721Topic {
+  type: string;
+  template: string;
+  chainId: string;
+  topic: {
+    name: string;
+    description: string;
+    deadline: number;
+    operation: {
+      chainId: string;
+      account: string;
+      receiver: string;
+      token: string;
+      tokenId: string;
+      infos: Array<ITokenInfo>;
       seq: number;
     };
   };

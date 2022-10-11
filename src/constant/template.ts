@@ -57,3 +57,9 @@ export const SET_TOKEN_ISSUE_TEMPLATE = {
   name: "NFT发行",
   chainId: "0x8000013b"
 };
+
+export const PUBLISH_721_TEMPLATE = {
+  type: "template",
+  name: "铸造NFT",
+  chainId: "0x8000013b"
+};
