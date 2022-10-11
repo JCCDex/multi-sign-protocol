@@ -63,3 +63,15 @@ export const PUBLISH_721_TEMPLATE = {
   name: "铸造NFT",
   chainId: "0x8000013b"
 };
+
+export const TRANSFER_721_TEMPLATE = {
+  type: "template",
+  name: "NFT转账",
+  chainId: "0x8000013b"
+};
+
+export const DELETE_721_TEMPLATE = {
+  type: "template",
+  name: "销毁NFT",
+  chainId: "0x8000013b"
+};

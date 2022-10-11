@@ -240,6 +240,43 @@ export const publish721Topic = {
   }
 };
 
+export const transfer721Topic = {
+  type: "multi-sign",
+  template: "NFT转账",
+  chainId: "0x8000013b",
+  topic: {
+    name: "NFT转账",
+    description: "因j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j做出贡献,故将这个NFT给他",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      receiver: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
+      tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+      memo: "",
+      seq: 52
+    }
+  }
+};
+
+export const delete721Topic = {
+  type: "multi-sign",
+  template: "销毁NFT",
+  chainId: "0x8000013b",
+  topic: {
+    name: "销毁NFT",
+    description: "因NFT无人接手,故将这个NFT销毁",
+    deadline: 1658129891,
+    operation: {
+      chainId: "0x8000013b",
+      account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+      tokenId: "45323444463335372D384144352D343945412D423837342D3943313644333937",
+      memo: "",
+      seq: 52
+    }
+  }
+};
+
 export const signerSign = {
   type: "oracle",
   action: "multiSign",

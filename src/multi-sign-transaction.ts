@@ -14,6 +14,8 @@ import {
   IIssueSetTopic,
   ISetTokenIssueTopic,
   IPublish721Topic,
+  ITransfer721Topic,
+  IDelete721Topic,
   ISignerSetTopic,
   ISubmitMultiSigned,
   IVote
@@ -21,6 +23,8 @@ import {
 import BigNumber from "bignumber.js";
 import { service } from "./fetch/service";
 import {
+  DELETE_721_TEMPLATE,
+  TRANSFER_721_TEMPLATE,
   PUBLISH_721_TEMPLATE,
   SET_TOKEN_ISSUE_TEMPLATE,
   ISSUE_SET_TEMPLATE,
@@ -494,6 +498,74 @@ export default class MultiSignTransaction {
       }
     };
     invariant(this.isPublish721Topic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化NFT转账topic
+   *
+   * @param {*} { name, description, deadline, account, receiver, tokenId, memo, seq }
+   * @returns {ITransfer721Topic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeTransfer721Topic({
+    name,
+    description,
+    deadline,
+    account,
+    receiver,
+    tokenId,
+    memo,
+    seq
+  }): ITransfer721Topic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: TRANSFER_721_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          receiver,
+          tokenId,
+          memo,
+          seq
+        }
+      }
+    };
+    invariant(this.isTransfer721Topic(data), "The topic includes invalid value");
+    return data;
+  }
+
+  /**
+   * 序列化销毁NFTtopic
+   *
+   * @param {*} { name, description, deadline, account, tokenId, memo, seq }
+   * @returns {IDelete721Topic}
+   * @memberof MultiSignTransaction
+   */
+  public serializeDelete721Topic({ name, description, deadline, account, tokenId, memo, seq }): IDelete721Topic {
+    const data = {
+      type: MEMO_TYPE.MULTI_SIGN,
+      template: DELETE_721_TEMPLATE.name,
+      chainId: this.chainId,
+      topic: {
+        name,
+        description,
+        deadline,
+        operation: {
+          chainId: this.chainId,
+          account,
+          tokenId,
+          memo,
+          seq
+        }
+      }
+    };
+    invariant(this.isDelete721Topic(data), "The topic includes invalid value");
     return data;
   }
 
@@ -1069,6 +1141,59 @@ export default class MultiSignTransaction {
       infos.every((d) => {
         return isPositiveStr(d.type) && isPositiveStr(d.data);
       }) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是铸造NFT信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isTransfer721Topic(data: ITransfer721Topic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, receiver, tokenId, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      wallet.isValidAddress(receiver) &&
+      isHex64Str(tokenId) &&
+      isDef(memo) &&
+      Transaction.isSequence(seq)
+    );
+  }
+
+  /**
+   * 是否是销毁NFT信息
+   *
+   * @param {*} data
+   * @returns {boolean}
+   * @memberof MultiSignTransaction
+   */
+  public isDelete721Topic(data: IDelete721Topic): boolean {
+    const { type, template, topic } = data || {};
+    const { name, description, deadline, operation } = topic || {};
+    const { chainId, account, tokenId, memo, seq } = operation || {};
+    return (
+      type === MEMO_TYPE.MULTI_SIGN &&
+      isPositiveStr(template) &&
+      data.chainId === this.chainId &&
+      isPositiveStr(name) &&
+      isPositiveStr(description) &&
+      isPositiveInteger(deadline) &&
+      chainId === this.chainId &&
+      wallet.isValidAddress(account) &&
+      isHex64Str(tokenId) &&
+      isDef(memo) &&
       Transaction.isSequence(seq)
     );
   }
