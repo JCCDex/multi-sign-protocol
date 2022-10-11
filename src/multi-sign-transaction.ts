@@ -36,7 +36,7 @@ import {
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import { transfer } from "@jccdex/common";
 import multiSign from "./util/sign-helper";
-import { isHex64Str } from "./util/use-util";
+import { isHex64Str } from "./util";
 import setAccount from "./util/set-account-helper";
 import setSignerList from "./util/signer-list-helper";
 import {
@@ -193,7 +193,7 @@ export default class MultiSignTransaction {
    * @returns {IPaymentTopic}
    * @memberof MultiSignTransaction
    */
-  public serializePaymentTopic({ name, description, deadline, account, to, seq, token, memo }): IPaymentTopic {
+  public serializePaymentTopic({ name, description, deadline, from, to, seq, token, memo }): IPaymentTopic {
     const data = {
       type: MEMO_TYPE.MULTI_SIGN,
       template: PAYMENT_TEMPLATE.name,
@@ -205,7 +205,7 @@ export default class MultiSignTransaction {
         operation: {
           chainId: this.chainId,
           memo: memo || "",
-          account,
+          account: from,
           to,
           seq,
           token

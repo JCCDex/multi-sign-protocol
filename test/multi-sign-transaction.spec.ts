@@ -29,7 +29,7 @@ describe("test MultiSignTransaction", () => {
         name: "奖励Bob 200USDT",
         description: "鉴于Bob发现并报告了软件中的BUG，特此奖励",
         deadline: 1658129891,
-        account: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
+        from: "jUtvJZtgZjRrz5jFC3VKg4mrnnJfWrLvLp",
         to: "j9iWN6W7bbiRnSq3zx5fm83hLJwaferH3j",
         memo: "",
         seq: 44,
