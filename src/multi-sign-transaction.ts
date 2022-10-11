@@ -459,7 +459,7 @@ export default class MultiSignTransaction {
   /**
    * 序列化铸造NFTtopic
    *
-   * @param {*} { name, description, deadline, account, publisher, token, number, memo, seq }
+   * @param {*} { name, description, deadline, account, receiver, token, tokenId, infos, seq }
    * @returns {IPublish721Topic}
    * @memberof MultiSignTransaction
    */
@@ -488,7 +488,7 @@ export default class MultiSignTransaction {
           receiver,
           token,
           tokenId,
-          infos,
+          infos: isDef(infos) ? infos : [],
           seq
         }
       }
