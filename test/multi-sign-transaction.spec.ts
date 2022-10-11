@@ -603,7 +603,7 @@ describe("test MultiSignTransaction", () => {
         memo: "",
         seq: 52
       });
-      console.log(d);
+
       expect(d).toEqual(transfer721Topic);
 
       expect(multiSignTransaction.isTransfer721Topic(d)).toEqual(true);
@@ -621,7 +621,7 @@ describe("test MultiSignTransaction", () => {
         memo: "",
         seq: 52
       });
-      console.log(d);
+
       expect(d).toEqual(delete721Topic);
 
       expect(multiSignTransaction.isDelete721Topic(d)).toEqual(true);
