@@ -35,7 +35,8 @@ import {
 } from "./constant/template";
 import { IAccountSet, IMultiSign, IMultiTransfer, ISignerList } from "./types/tp-transfer";
 import { transfer } from "@jccdex/common";
-import { multiSign, isTokenInfos, isHex64Str } from "./util/sign-helper";
+import multiSign from "./util/sign-helper";
+import { isHex64Str } from "./util/use-util";
 import setAccount from "./util/set-account-helper";
 import setSignerList from "./util/signer-list-helper";
 import {
@@ -188,7 +189,7 @@ export default class MultiSignTransaction {
   /**
    * 序列化转账topic
    *
-   * @param {*} { name, description, deadline, account, to, seq, token }
+   * @param {*} { name, description, deadline, from, to, seq, token }
    * @returns {IPaymentTopic}
    * @memberof MultiSignTransaction
    */
@@ -1065,7 +1066,9 @@ export default class MultiSignTransaction {
       wallet.isValidAddress(receiver) &&
       isPositiveStr(token) &&
       isHex64Str(tokenId) &&
-      isTokenInfos(infos) &&
+      infos.every((d) => {
+        return isPositiveStr(d.type) && isPositiveStr(d.data);
+      }) &&
       Transaction.isSequence(seq)
     );
   }

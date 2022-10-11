@@ -231,7 +231,7 @@ export interface IPublish721Topic {
       receiver: string;
       token: string;
       tokenId: string;
-      infos: Array<ITokenInfo>;
+      infos: ITokenInfo[];
       seq: number;
     };
   };
