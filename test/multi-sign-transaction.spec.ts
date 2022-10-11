@@ -538,6 +538,10 @@ describe("test MultiSignTransaction", () => {
           {
             type: "jpg",
             data: "1"
+          },
+          {
+            type: "jpg",
+            data: "2"
           }
         ],
         seq: 52
