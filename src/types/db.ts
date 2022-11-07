@@ -33,6 +33,7 @@ export enum TopicStatus {
 
 export interface ITopic {
   executeStatus: TopicStatus;
+  createdTime: number;
   hash: string;
   md5: string;
   data: IPaymentTopic | ISignerSetTopic | IEnableTopic;

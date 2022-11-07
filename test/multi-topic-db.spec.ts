@@ -12,18 +12,21 @@ describe("test MultiTopicDB", () => {
       executeStatus: TopicStatus.UNEXECUTED,
       hash: "",
       md5: MultiTopicDB.md5(JSON.stringify(paymentTopic)),
+      createdTime: 0,
       data: paymentTopic
     },
     {
       executeStatus: TopicStatus.UNEXECUTED,
       hash: "",
       md5: MultiTopicDB.md5(JSON.stringify(enableTopic)),
+      createdTime: 0,
       data: enableTopic
     },
     {
       executeStatus: TopicStatus.UNEXECUTED,
       hash: "",
       md5: MultiTopicDB.md5(JSON.stringify(signerTopic)),
+      createdTime: 0,
       data: signerTopic
     }
   ];
